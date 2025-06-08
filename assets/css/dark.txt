@@ -1,0 +1,24 @@
+:root {
+  /* Backgrounds */
+  --color-primary: #1e293b;               /* Main background: dark slate-blue */
+  --color-counter-primary: #334155;       /* Slightly lighter section background */
+  --color-counter-secondary: #627287;     /* Even lighter for layering contrast */
+
+  /* Accent / Brand Colors */
+  --color-highlight: #10b981;             /* Emerald green highlight */
+  --color-button-primary: #22c55e;        /* Brighter green for CTAs */
+
+  /* Text */
+  --color-text-primary: #f8fafc;          /* Almost-white, for high contrast */
+  --color-text-secondary-dark: #cbd5e1;   /* Light slate */
+  --color-text-secondary: #94a3b8;        /* Muted slate */
+
+  /* UI Borders and Dividers */
+  --color-divider: #64748b;
+  --color-border-primary: #475569;
+
+  /* Footer */
+  --color-primary-footer: #0f172a;        /* Very dark slate */
+  --color-text-primary-footer: #e2e8f0;
+  --color-text-secondary-footer: #94a3b8;
+}

@@ -1,0 +1,19 @@
+:root {
+  --color-primary: #c0f1ed;
+  --color-counter-primary: #a0e7e2;
+  --color-counter-secondary: #3dd7c7;
+
+  --color-highlight: #0f83db;
+  --color-button-primary: #1e6f8e;
+
+  --color-text-primary: #1b3b45;
+  --color-text-secondary-dark: #2c5d68;
+  --color-text-secondary: #3a7a7e;
+
+  --color-divider: #77b7b0;
+  --color-border-primary: #42938c;
+
+  --color-primary-footer: #1b3b45;
+  --color-text-primary-footer: #c0f1ed;
+  --color-text-secondary-footer: #77b7b0;
+}
