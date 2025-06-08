@@ -5,7 +5,7 @@
                 <NetworkAnimation />
             </div>
             <div class="hero-title-container">
-                <p class="hero-title">Be Part of <span class="highlight">The FOSS Revolution</span></p>
+                <p class="hero-title animated-title">Be Part of <span class="highlight">The FOSS Revolution</span></p>
             </div>
         </div>
         <div class="info-card">
@@ -179,4 +179,67 @@ import NetworkAnimation from '@/components/network_animation.vue';
     background-color: var(--color-button-primary);
     color: var(--color-counter-primary);
 }
+.animated-title {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeSlideUp 5.0s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    transition: 
+        transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+        color 0.3s,
+        text-shadow 0.5s,
+        opacity 0.5s;
+    cursor: pointer;
+}
+
+@keyframes fadeSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated-title:hover {
+    transform: perspective(600px) rotateX(18deg) rotateY(-12deg) scale(1.10) translateY(-8px);
+    text-shadow:
+        0 6px 24px rgba(0,0,0,0.25),
+        0 1.5px 0 #fff,
+        0 16px 32px rgba(0,0,0,0.18),
+        0 0.5px 2px #222;
+    opacity: 1;
+    transition:
+        transform 2s cubic-bezier(0.23, 1, 0.32, 1),
+        text-shadow 0.5s,
+        opacity 0.5s;
+}
+
+.info-card,
+.member-card,
+.sub-card {
+    animation: boxFadeIn 2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes boxFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.info-card,
+.member-card {
+    transition: 
+        box-shadow 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform, box-shadow;
+}
+
+
+.sub-card {
+    border: 2px solid var(--color-border-primary);
+    padding: 24px 20px; 
+}
+
 </style>
