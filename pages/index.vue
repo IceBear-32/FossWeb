@@ -25,11 +25,11 @@
                         innovation — one rooted in openness, community, and a shared drive to build for the world.</p>
                 </div>
                 <div class="info-sub-cards-section">
-                    <SubCard tag="MISSION" bulletlist=true description="Promote open source awareness and ethics.
+                    <SubCard class="sub-card" tag="MISSION" bulletlist=true description="Promote open source awareness and ethics.
                                 Enable student contributions to global projects.
                                 Host hands-on workshops, events, and hackathons.
                                 Build skills through collaboration and mentorship." />
-                    <SubCard tag="VISION"
+                    <SubCard class="sub-card" tag="VISION"
                         description="To cultivate a vibrant, inclusive, and innovative community where students empower each other through the principles of Free and Open Source Software (FOSS), driving collaborative technology for social good and global impact." />
                 </div>
             </div>
@@ -202,9 +202,7 @@ import NetworkAnimation from '@/components/network_animation.vue';
     transform: perspective(600px) rotateX(18deg) rotateY(-12deg) scale(1.10) translateY(-8px);
     text-shadow:
         0 6px 24px rgba(0,0,0,0.25),
-        0 1.5px 0 #fff,
-        0 16px 32px rgba(0,0,0,0.18),
-        0 0.5px 2px #222;
+        0 16px 32px rgba(0,0,0,0.18);
     opacity: 1;
     transition:
         transform 2s cubic-bezier(0.23, 1, 0.32, 1),
