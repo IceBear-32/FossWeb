@@ -2,7 +2,7 @@
     <div class="container">
         <div class="hero-section">
             <div class="hero-network-animation">
-                <NetworkAnimation />
+                <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/3o6Zt0EiSgr1cWE6WY" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/animation-effect-beam-3o6Zt0EiSgr1cWE6WY">via GIPHY</a></p>
             </div>
             <div class="hero-title-container">
                 <p class="hero-title animated-title">Be Part of <span class="highlight">The FOSS Revolution</span></p>
@@ -48,7 +48,6 @@
 
 <script setup>
 import SubCard from '@/components/sub_card.vue';
-import NetworkAnimation from '@/components/network_animation.vue';
 </script>
 
 <style scoped>
