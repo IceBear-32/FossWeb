@@ -3,13 +3,42 @@
         <div class="footer-content">
             <div class="footer-link-container">
                 <div class="footer-link-list">
-                    <span class="footer-text-primary">FOSS United</span>
+                    <span class="footer-text-primary">FOSS</span>
                     <a href="/" class="footer-text-secondary footer-link">Home</a>
                     <a href="/events" class="footer-text-secondary footer-link">Events</a>
                     <a href="/forum" class="footer-text-secondary footer-link">Forum</a>
                     <a href="/eventgallery" class="footer-text-secondary footer-link">Gallery</a>
                     <a href="/join" class="footer-text-secondary footer-link">Join FOSS</a>
                 </div>
+                <div class="footer-link-list">
+                    <span class="footer-text-primary">About</span>
+                    <a href="/about" class="footer-text-secondary footer-link">Team</a>
+                    <a href="/about/contributors" class="footer-text-secondary footer-link">Contributors</a>
+                </div>
+                <div class="footer-link-list">
+                    <span class="footer-text-primary">Policy</span>
+                    <a href="/privacy-policy" class="footer-text-secondary footer-link">Privacy Policy</a>
+                    <a href="/terms-of-service" class="footer-text-secondary footer-link">Terms of Service</a>
+                </div>
+                <div class="footer-link-list">
+                    <span class="footer-text-primary">Socials</span>
+                    <a href="" class="footer-text-secondary footer-link">Instagram</a>
+                    <a href="" class="footer-text-secondary footer-link">Facebook</a>
+                    <a href="" class="footer-text-secondary footer-link">Twitter</a>
+                    <a href="" class="footer-text-secondary footer-link">LinkedIn</a>
+                    <a href="" class="footer-text-secondary footer-link">GitHub</a>
+                </div>
+                <div class="footer-link-list">
+                    <span class="footer-text-primary">Contact</span>
+                    <a href="/contact" class="footer-text-secondary footer-link">Contact Us</a>
+                    <a href="/report" class="footer-text-secondary footer-link">Report an Issue</a>
+                </div>
+                <div class="footer-link-list">
+                    <span class="footer-text-primary">Events</span>
+                </div>
+            </div>
+            <div class="footer-info-container">
+                
             </div>
         </div>
     </footer>

@@ -1,9 +1,10 @@
 <template>
     <div class="container">
+        <div v-if="showCredsModal" class="creds-modal-overlay">
+            <Credentials @close="showCredsModal = false" :redir="redirUrl" show-close-btn="true" />
+        </div>
         <div class="hero-section">
-            <div class="hero-network-animation">
-                <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/3o6Zt0EiSgr1cWE6WY" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/animation-effect-beam-3o6Zt0EiSgr1cWE6WY">via GIPHY</a></p>
-            </div>
+            <div class="hero-animation"></div>
             <div class="hero-title-container">
                 <p class="hero-title animated-title">Be Part of <span class="highlight">The FOSS Revolution</span></p>
             </div>
@@ -38,8 +39,10 @@
                     <p class="member-card-title">Start <span class="highlight">Contributing now!</span></p>
                 </div>
                 <div class="member-card-btns">
-                    <a href="/contribute" class="member-btn member-btn-fill">Become a Contributor</a>
-                    <a href="/join" class="member-btn">Become a Member</a>
+                    <a href="/contribute" v-if="userLoggedIn" class="member-btn member-btn-fill">Become a Contributor</a>
+                    <button v-else class="member-btn member-btn-fill" @click="showCredsModal = true; redirUrl = '/contribute'">Become a Contributor</button>
+                    <a href="/join" v-if="userLoggedIn" class="member-btn">Become a Member</a>
+                    <button v-else class="member-btn" @click="showCredsModal = true; redirUrl = '/join'">Become a Member</button>
                 </div>
             </div>
         </div>
@@ -48,6 +51,14 @@
 
 <script setup>
 import SubCard from '@/components/sub_card.vue';
+import Credentials  from '@/components/credentials.vue';
+
+import {ref} from 'vue';
+const showCredsModal = ref(false);
+const redirUrl = ref('');
+
+const userLoggedIn = ref(false);
+
 </script>
 
 <style scoped>
@@ -107,11 +118,13 @@ import SubCard from '@/components/sub_card.vue';
     margin-bottom: 80px;
 }
 
-.hero-network-animation {
-  width: 100%;
-  height: 300px;
-  position: relative;
-  overflow: hidden;
+.hero-animation {
+    width: 100%;
+    background: url('https://i.giphy.com/3o6Zt0EiSgr1cWE6WY.webp');
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
 }
 
 .hero-title-container {
@@ -121,7 +134,6 @@ import SubCard from '@/components/sub_card.vue';
     letter-spacing: -0.1rem;
     line-height: 1.3;
     font-weight: bold;
-    padding-top: 60px;
     position: relative;
     z-index: 1;
     margin-top: -240px;
@@ -163,6 +175,9 @@ import SubCard from '@/components/sub_card.vue';
     font-size: 20px;
     text-decoration: none;
     color: var(--color-highlight);
+    background-color: var(--color-primary);
+    border: none;
+    cursor: pointer;
     font-weight: 600;
     text-align: center;
     box-shadow: 0 0 0 1px var(--color-button-primary);
@@ -233,10 +248,21 @@ import SubCard from '@/components/sub_card.vue';
     will-change: transform, box-shadow;
 }
 
-
 .sub-card {
-    border: 2px solid var(--color-border-primary);
     padding: 24px 20px; 
+}
+
+.creds-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
 }
 
 </style>
