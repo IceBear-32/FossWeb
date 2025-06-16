@@ -1,6 +1,6 @@
 <template>
     <div class="login-form-container">
-        <Credentials />
+        <Credentials redir="/"/>
     </div>
 </template>
 

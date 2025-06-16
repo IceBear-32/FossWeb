@@ -1,6 +1,5 @@
 <template>
   <div class="auth-container">
-    <!-- Close button, shown only if showCloseBtn is true -->
     <button
       v-if="showCloseBtn"
       class="close-btn"

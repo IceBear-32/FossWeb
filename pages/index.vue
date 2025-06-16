@@ -139,6 +139,10 @@ const userLoggedIn = ref(false);
     margin-top: -240px;
 }
 
+.hero-title {
+    text-shadow: 2px 2px black;
+}
+
 .highlight {
     color: var(--color-highlight);
 }
@@ -202,7 +206,6 @@ const userLoggedIn = ref(false);
         color 0.3s,
         text-shadow 0.5s,
         opacity 0.5s;
-    cursor: pointer;
 }
 
 @keyframes fadeSlideUp {
@@ -212,19 +215,7 @@ const userLoggedIn = ref(false);
     }
 }
 
-.animated-title:hover {
-    transform: perspective(600px) rotateX(18deg) rotateY(-12deg) scale(1.10) translateY(-8px);
-    text-shadow:
-        0 6px 24px rgba(0,0,0,0.25),
-        0 16px 32px rgba(0,0,0,0.18);
-    opacity: 1;
-    transition:
-        transform 2s cubic-bezier(0.23, 1, 0.32, 1),
-        text-shadow 0.5s,
-        opacity 0.5s;
-}
-
-.info-card,
+.info-card-content,
 .member-card,
 .sub-card {
     animation: boxFadeIn 2s cubic-bezier(0.23, 1, 0.32, 1);
@@ -241,7 +232,7 @@ const userLoggedIn = ref(false);
     }
 }
 
-.info-card,
+.info-card-content,
 .member-card {
     transition: 
         box-shadow 0.35s cubic-bezier(0.23, 1, 0.32, 1);

@@ -1,19 +1,19 @@
 :root {
-  --color-primary: #2F78BF;
-  --color-counter-primary: #0e5eae;
-  --color-counter-secondary: #1962ac;
+  --color-primary: #1a2c38;               /* Dark blue-gray (base tone) */
+  --color-counter-primary: #25475c;       /* Slate blue for hover/alt */
+  --color-counter-secondary: #2e5f77;     /* Mid slate blue (contrast alt) */
 
-  --color-highlight: #95fff1;
-  --color-button-primary: #47cbff;
+  --color-highlight: #69C3FF;             /* Icy blue for highlights */
+  --color-button-primary: #44baff;        /* Crisp, professional blue */
 
-  --color-text-primary: #e8fffd;
-  --color-text-secondary-dark: #71edfd;
-  --color-text-secondary: #86f7ff;
+  --color-text-primary: #eafcff;          /* Very light cyan-white */
+  --color-text-secondary-dark: #a2eaff;   /* Light cyan for accents on dark bg */
+  --color-text-secondary: #bdf2ff;        /* Brighter cyan for accent text */
 
-  --color-divider: #03af9b;
-  --color-border-primary: #80c1e3;
+  --color-divider: #3b8fa8;               /* Cool cyan-blue divider */
+  --color-border-primary: #5aaecd;        /* Gentle blue border */
 
-  --color-primary-footer: #172b45;
-  --color-text-primary-footer: #c0f1ed;
-  --color-text-secondary-footer: #7cdacf;
+  --color-primary-footer: #101820;        /* Deep navy-black for footer */
+  --color-text-primary-footer: #dcf8ff;   /* Soft bright text for footer */
+  --color-text-secondary-footer: #88ddff; /* Subtle cyan accent */
 }

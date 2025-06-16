@@ -57,6 +57,8 @@ const processedDescription = computed(() => {
     margin: 0;
     font-weight: 600;
     font-size: 12px;
+    line-height: 1.7;
+    letter-spacing: -0.02rem;
 }
 
 .card-description {
