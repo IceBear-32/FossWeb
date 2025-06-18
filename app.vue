@@ -25,6 +25,11 @@ body {
 
 .page-content {
     flex: 1;
+    background: radial-gradient(var(--color-counter-primary) 10%, var(--color-primary));
+}
+
+.highlight {
+    color: var(--color-highlight);
 }
 </style>
 

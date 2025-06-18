@@ -1,12 +1,12 @@
 <template>
     <div class="container">
-        <div v-if="showCredsModal" class="creds-modal-overlay">
+        <div v-if="showCredsModal" class="creds-modal-overlay" @click.self="showCredsModal = false">
             <Credentials @close="showCredsModal = false" :redir="redirUrl" show-close-btn="true" />
         </div>
         <div class="hero-section">
             <div class="hero-animation"></div>
             <div class="hero-title-container">
-                <p class="hero-title animated-title">Be Part of <span class="highlight">The FOSS Revolution</span></p>
+                <p class="hero-title">Be Part of <span class="highlight">The FOSS Revolution</span></p>
             </div>
         </div>
         <div class="info-card">
@@ -39,10 +39,13 @@
                     <p class="member-card-title">Start <span class="highlight">Contributing now!</span></p>
                 </div>
                 <div class="member-card-btns">
-                    <a href="/contribute" v-if="userLoggedIn" class="member-btn member-btn-fill">Become a Contributor</a>
-                    <button v-else class="member-btn member-btn-fill" @click="showCredsModal = true; redirUrl = '/contribute'">Become a Contributor</button>
+                    <a href="/contribute" v-if="userLoggedIn" class="member-btn member-btn-fill">Become a
+                        Contributor</a>
+                    <button v-else class="member-btn member-btn-fill"
+                        @click="showCredsModal = true; redirUrl = '/contribute'">Become a Contributor</button>
                     <a href="/join" v-if="userLoggedIn" class="member-btn">Become a Member</a>
-                    <button v-else class="member-btn" @click="showCredsModal = true; redirUrl = '/join'">Become a Member</button>
+                    <button v-else class="member-btn" @click="showCredsModal = true; redirUrl = '/join'">Become a
+                        Member</button>
                 </div>
             </div>
         </div>
@@ -51,9 +54,9 @@
 
 <script setup>
 import SubCard from '@/components/sub_card.vue';
-import Credentials  from '@/components/credentials.vue';
+import Credentials from '@/components/credentials.vue';
 
-import {ref} from 'vue';
+import { ref } from 'vue';
 const showCredsModal = ref(false);
 const redirUrl = ref('');
 
@@ -122,7 +125,6 @@ const userLoggedIn = ref(false);
     width: 100%;
     background: url('https://i.giphy.com/3o6Zt0EiSgr1cWE6WY.webp');
     height: 300px;
-    position: relative;
     overflow: hidden;
     background-size: cover;
 }
@@ -134,7 +136,6 @@ const userLoggedIn = ref(false);
     letter-spacing: -0.1rem;
     line-height: 1.3;
     font-weight: bold;
-    position: relative;
     z-index: 1;
     margin-top: -240px;
 }
@@ -143,14 +144,10 @@ const userLoggedIn = ref(false);
     text-shadow: 2px 2px black;
 }
 
-.highlight {
-    color: var(--color-highlight);
-}
-
 .member-card {
     display: flex;
     flex-direction: column;
-    background: linear-gradient(0deg, var(--color-primary) 50%, var(--color-counter-primary) 100%);
+    background: radial-gradient(var(--color-counter-primary), var(--color-primary) 70%);
     margin-top: 5px;
     padding: 40px 200px;
 }
@@ -187,60 +184,17 @@ const userLoggedIn = ref(false);
     box-shadow: 0 0 0 1px var(--color-button-primary);
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
+
 .member-btn:hover {
     background-color: var(--color-highlight);
     color: var(--color-primary);
     box-shadow: 0 0 0 2px var(--color-button-primary);
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
+
 .member-btn-fill {
     background-color: var(--color-button-primary);
     color: var(--color-counter-primary);
-}
-.animated-title {
-    opacity: 0;
-    transform: translateY(40px);
-    animation: fadeSlideUp 5.0s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-    transition: 
-        transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-        color 0.3s,
-        text-shadow 0.5s,
-        opacity 0.5s;
-}
-
-@keyframes fadeSlideUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.info-card-content,
-.member-card,
-.sub-card {
-    animation: boxFadeIn 2s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-@keyframes boxFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(40px) scale(0.96);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-.info-card-content,
-.member-card {
-    transition: 
-        box-shadow 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-    will-change: transform, box-shadow;
-}
-
-.sub-card {
-    padding: 24px 20px; 
 }
 
 .creds-modal-overlay {
@@ -249,11 +203,10 @@ const userLoggedIn = ref(false);
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(105, 105, 105, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 100;
 }
-
 </style>
