@@ -1,147 +1,343 @@
 <template>
-  <div class="events-container">
-    
-    <div class="hero-section">
-      
-      <div class="hero-animation"></div>
-      <div class="hero-title-container">
-        
-        <p class="hero-title">Our <span class="highlight">Technical Events</span></p>
-      </div>
-    </div>
-
-    
-    <div class="events-section">
-      <div class="events-content">
-        <div class="events-title-container">
-          <p class="events-content-title highlight">EVENTS</p>
-          <p class="events-content-description">
-            Our FOSS Chapter unites people through impactful and captivating events, driven by a passion for open knowledge and collaborative development. We think that learning is most effective when it is shared, and our events embody that spirit of growth. Our calendar is jam-packed with chances to learn, develop, and contribute, whether it's a tech talk, a hands-on workshop, or a group coding event.
-          </p>
+    <div class="events-container">
+        <div class="hero-section">
+            <div class="hero-animation"></div>
+            <div class="hero-title-container">
+                <p class="hero-title">Our <span class="highlight">Technical Events</span></p>
+            </div>
         </div>
-      </div>
+        <div class="events-section">
+            <div class="events-content">
+                <div class="events-title-container">
+                    <p class="events-content-title highlight">EVENTS</p>
+                    <p class="events-content-description">Our FOSS Chapter unites people through impactful and
+                        captivating events,
+                        driven by a passion for open knowledge and collaborative development. We think that learning is
+                        most
+                        effective when it is shared, and our events embody that spirit of growth. Our calendar is
+                        jam-packed
+                        with chances to learn, develop, and contribute, whether it's a tech talk, a hands-on workshop,
+                        or a
+                        group coding event. These events are more than just get-togethers, they are experiences that
+                        mold
+                        future open-source leaders and their ideas and abilities.</p>
+                </div>
+                <div class="events-timeline-container">
+                    <div class="events-timeline-card">
+                        <p class="timeline-title highlight">PAST EVENTS</p>
+                        <p class="timeline-description">Explore our past events that have shaped our community.</p>
+                        <div class="timeline-btn-split">
+                            <button class="view-timeline-btn" @click="openPastEventsModal = true">View Events</button>
+                            <a class="timeline-link-btn" href="/eventgallery">View Gallery</a>
+                        </div>
+                    </div>
+                    <div class="events-timeline-card">
+                        <p class="timeline-title highlight">UPCOMING EVENTS</p>
+                        <p class="timeline-description">Stay tuned for our upcoming events that will inspire and
+                            educate.</p>
+                        <div class="timeline-btn-split">
+                            <button class="view-timeline-btn" @click="openUpcomingEventsModal = true">View Events</button>
+                            <a class="timeline-link-btn" href="/eventregistration">Event Registration</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="events-modal" v-if="openPastEventsModal" @click.self="openPastEventsModal = false">
+            <div class="events-modal-content">
+                <h2 class="events-modal-title highlight">Past Events</h2>
+                <div class="events-modal-list">
+                    <div v-for="event in pastEvents" :key="event.title" class="events-modal-item">
+                        <h3 class="events-modal-item-title highlight">{{ event.title }}</h3>
+                        <div class="events-modal-item-split">
+                            <i class="bi bi-calendar"></i>
+                            <p class="events-modal-item-date">{{ event.date }}</p>
+                        </div>
+                        <div class="events-modal-item-split">
+                            <i class="bi bi-info-circle"></i>
+                            <p class="events-modal-item-description">{{ event.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="events-modal" v-if="openUpcomingEventsModal" @click.self="openUpcomingEventsModal = false">
+            <div class="events-modal-content">
+                <h2 class="events-modal-title highlight">Upcoming Events</h2>
+                <div class="events-modal-list">
+                    <div v-for="event in upcomingEvents" :key="event.title" class="events-modal-item">
+                        <h3 class="events-modal-item-title highlight">{{ event.title }}</h3>
+                        <div class="events-modal-item-split">
+                            <i class="bi bi-calendar"></i>
+                            <p class="events-modal-item-date">{{ event.date }}</p>
+                        </div>
+                        <div class="events-modal-item-split">
+                            <i class="bi bi-info-circle"></i>
+                            <p class="events-modal-item-description">{{ event.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    
-    <div class="timeline-container">
-      <svg class="timeline-svg">
-        <path
-          d="M100,0 C100,150 300,150 300,300 C300,450 500,450 500,300 C500,150 700,150 700,300 C700,450 900,450 900,300 C900,150 1100,150 1100,300"
-          fill="transparent"
-          stroke="#999"
-          stroke-width="4"
-          stroke-dasharray="8,8"
-        />
-      </svg>
-
-      
-      <div class="event-point" style="left: 130px; top: 100px;"></div>
-      <div class="event-box" style="left: -80px; top: 140px;">
-        <div class="event-title">TechCanvas</div>
-        <div>Feb 2024 – Technical event by FOSS Club.</div>
-      </div>
-
-      <div class="event-point" style="left: 300px; top: 300px;"></div>
-      <div class="event-box" style="left: 240px; top: 190px;"><div class="event-title">Women's Day</div><div>Mar 2024 – AI Prompt event with 105 students.</div></div>
-
-      <div class="event-point" style="left: 475px; top: 350px;"></div>
-      <div class="event-box" style="left: 440px; top: 410px;"><div class="event-title">Ideathon</div><div>Mid Mar 2024 – Intercollege innovation event.</div></div>
-
-      <div class="event-point" style="left: 700px; top: 300px;"></div>
-      <div class="event-box" style="left: 640px; top: 190px;"><div class="event-title">Cipher Vault</div><div>Aug 2024 – Cryptography technical event.</div></div>
-
-      <div class="event-point" style="left: 875px; top: 350px;"></div>
-      <div class="event-box" style="left: 840px; top: 410px;"><div class="event-title">Make-A-thon</div><div>Sept 2024 – Intercollege creative build event.</div></div>
-
-      <div class="event-point" style="left: 1100px; top: 300px; background-color: #28a745;"></div>
-      <div class="event-box" style="left: 1040px; top: 190px;"><div class="event-title">Upcoming</div><div><strong>Git:</strong> Hands-on Git & collaboration.</div><div><strong>IOT:</strong> Real-world IoT guided sessions.</div></div>
-    </div>
-  </div>
 </template>
+
+<script setup>
+
+import { ref } from 'vue';
+
+const openPastEventsModal = ref(false);
+const openUpcomingEventsModal = ref(false);
+
+const pastEvents = [
+    { title: 'TechCanvas', date: 'Feb 2024', description: 'This technical event known as ‘TechCanvas’ was conducted under FOSS Club.' },
+    { title: "Women's Day", date: '8 Mar 2024', description: 'On behalf of Women’s Day an AI prompt-based event was conducted where around 105 students from diverse departments participated.' },
+    { title: 'Ideathon', date: 'Mid-Mar 2024', description: 'This Inter-college event was conducted aiming to foster innovation and collaboration. This was also a trial event for FLORENCE’24.' },
+    { title: 'Cipher Vault', date: '30 Aug 2024', description: 'Cryptography technical event.' },
+    { title: 'Make-A-thon', date: 'Sept 2024', description: 'Intercollege creative build event.' },
+    { title: 'Open-Source Oasis -sponsored by Openweaver', date: '13 Mar 2024', description: 'This workshop sponsored by Openweaver, was conducted in which about 180 students from various departments have participated.' },
+    { title: 'Debug your career path', date: '18 Sept 2024', description: 'This workshop was conducted for profile building and career guidance.' },
+    { title: 'Symposium', date: '12&13 Sept 2024', description: 'In celebration of World Engineers Day, the club conducted a technical symposium.' },
+    { title: 'Research Route', date: '22 Jan 2025', description: 'This workshop was conducted in offline in IST 101. The aim of the workshop was to provide students with insights into research paper, projects, patent, funding opportunities and publishing techniques. As speakers, Rayean Patric (IEEE Chairperson) explained about Research and IEEE Student benefits, and Bharat Kumar (IEEE Epic Winner) addressed about the projects, patents and fundings. Around 100 students from various departments attended the workshop where they liked the interactive discussion and gained knowledge to pursue academic and professional goals.' },
+];
+
+const upcomingEvents = [
+    { title: 'Git&IOT Initiative', date: 'Mid-Jul 2025', description: 'Git: Hands-on Git & collaboration. IoT: Real-world IoT guided sessions.' }
+];
+</script>
 
 <style scoped>
 .hero-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 80px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 80px;
 }
+
 .hero-animation {
-  width: 100%;
-  background: url('https://i.giphy.com/3o6Zt0EiSgr1cWE6WY.webp');
-  height: 300px;
-  background-size: cover;
+    width: 100%;
+    background: url('https://i.giphy.com/3o6Zt0EiSgr1cWE6WY.webp');
+    height: 300px;
+    overflow: hidden;
+    background-size: cover;
 }
+
 .hero-title-container {
-  font-size: 40px;
-  font-weight: bold;
-  margin-top: -240px;
-  text-shadow: 2px 2px black;
+    display: flex;
+    flex-direction: row;
+    font-size: 40px;
+    letter-spacing: -0.1rem;
+    line-height: 1.3;
+    font-weight: bold;
+    margin-top: -240px;
 }
-.hero-title .highlight {
-  color: #007bff;
+
+.hero-title {
+    text-shadow: 2px 2px black;
 }
 
 .events-section {
-  background-color: var(--color-primary, #007bff);
-}
-.events-content {
-  padding: 48px;
-  border-radius: 0.5rem;
-  background-color: var(--color-primary, #007bff);
-  border: 1px solid var(--color-border-primary, #ccc);
-  margin: 0 200px;
-  transform: translateY(-40px);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.events-title-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.events-content-title {
-  font-size: 20px;
-  font-weight: 700;
-  margin: 0;
-}
-.events-content-description {
-  font-size: 16px;
-  font-weight: 400;
-  margin: 0;
-  color: #d2cccc;
+    background-color: var(--color-primary);
 }
 
-.timeline-container {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  margin: auto;
+.events-content {
+    padding: 3rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-border-primary);
+    margin: 0 200px;
+    transform: translateY(-40px);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
-.timeline-svg {
-  width: 100%;
-  height: 600px;
+
+.events-content-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
 }
-.event-point {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background-color: #007bff;
-  border: 3px solid white;
+
+.events-content-description {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
 }
-.event-box {
-  position: absolute;
-  width: 200px;
-  background: hsl(210, 53%, 58%);
-  padding: 10px 14px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  font-size: 14px;
+
+.events-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
-.event-title {
-  font-weight: bold;
-  margin-bottom: 4px;
+
+.events-timeline-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 0.75rem;
+    gap: 1.2rem;
+}
+
+.events-timeline-card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.timeline-title {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1.7;
+    letter-spacing: -0.02rem;
+}
+
+.events-timeline-card p {
+    margin: 0;
+}
+
+.timeline-description {
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: -0.04rem;
+}
+
+.view-timeline-btn,
+.timeline-link-btn {
+    padding: 0.5rem 1rem;
+    background-color: var(--color-button-primary);
+    color: var(--color-counter-primary);
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.view-timeline-btn:hover,
+.timeline-link-btn:hover {
+    background: var(--color-highlight);
+    color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-button-primary);
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.timeline-link-btn {
+    text-decoration: none;
+    text-align: center;
+}
+
+.timeline-btn-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.events-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(105, 105, 105, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.events-modal-title {
+    margin: 2rem;
+}
+
+.events-modal-content {
+    position: relative;
+    background-color: var(--color-primary);
+    border-radius: 0.5rem;
+    width: 80%;
+    max-width: 600px;
+    max-height: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.events-modal-content h3 {
+    margin: 0;
+}
+
+.events-modal-content::after {
+    content: '';
+    position: sticky;
+    bottom: 0;
+    display: block;
+    height: 3rem;
+    background: linear-gradient(to bottom, transparent, var(--color-primary));
+    pointer-events: none;
+}
+
+.events-modal-list {
+    padding: 0 0.35rem;
+    margin: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-left: 0.25rem solid var(--color-border-primary);
+}
+
+.events-modal-item {
+    position: relative;
+    padding: 1rem;
+    border: 1px solid var(--color-border-primary);
+    border-radius: 0.5rem;
+    background-color: var(--color-counter-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.events-modal-item-title,
+.events-modal-item-date,
+.events-modal-item-description {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1.7;
+    letter-spacing: -0.02rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-border-primary);
+}
+
+.events-modal-item-date,
+.events-modal-item-description {
+    margin: 0 0 0 1rem;
+}
+
+.events-modal-item-split i {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    text-align: center;
+    align-self: center;
+}
+
+.events-modal-item-split {
+    display: grid;
+    grid-template-columns: 12px 1fr;
+}
+
+.events-modal-item::before {
+    content: '';
+    position: absolute;
+    top: 35%;
+    left: calc(-0.35rem - 16px - 0.2rem);
+    width: 1rem;
+    height: 1rem;
+    border: 0.5rem solid var(--color-divider);
+    background-color: var(--color-highlight);
+    border-radius: 2rem;
 }
 </style>

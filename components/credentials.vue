@@ -25,7 +25,7 @@
       <button type="submit" class="submit-btn">{{ isSignUp ? 'Register' : 'Login' }}</button>
     </form>
 
-    <div class="toggle-link" @click="toggleForm">
+    <div v-if="showSignUp" class="toggle-link" @click="toggleForm">
       {{ isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up" }}
     </div>
   </div>
@@ -37,12 +37,18 @@ import { ref } from 'vue'
 const props = defineProps({
   redir: {
     type: String,
-    required: false,
+    required: false
   },
   showCloseBtn: {
     type: Boolean,
     default: false,
+    required: false
   },
+  showSignUp: {
+    type: Boolean,
+    default: true,
+    required: false
+  }
 })
 
 const isSignUp = ref(false)

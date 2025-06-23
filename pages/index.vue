@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div v-if="showCredsModal" class="creds-modal-overlay" @click.self="showCredsModal = false">
-            <Credentials @close="showCredsModal = false" :redir="redirUrl" show-close-btn="true" />
+            <Credentials @close="showCredsModal = false" :redir="redirUrl" show-close-btn />
         </div>
         <div class="hero-section">
             <div class="hero-animation"></div>
