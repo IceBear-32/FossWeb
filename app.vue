@@ -3,7 +3,7 @@
     <div class="main-container">
         <NavBar />
         <div class="page-content">
-            <NuxtPage class="page-main" />
+            <NuxtPage />
         </div>
         <Footer />
     </div>

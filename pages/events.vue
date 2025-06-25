@@ -86,25 +86,10 @@
 <script setup>
 
 import { ref } from 'vue';
+import { pastEvents, upcomingEvents } from '@/assets/js/events_details.js';
 
 const openPastEventsModal = ref(false);
 const openUpcomingEventsModal = ref(false);
-
-const pastEvents = [
-    { title: 'TechCanvas', date: 'Feb 2024', description: 'This technical event known as ‘TechCanvas’ was conducted under FOSS Club.' },
-    { title: "Women's Day", date: '8 Mar 2024', description: 'On behalf of Women’s Day an AI prompt-based event was conducted where around 105 students from diverse departments participated.' },
-    { title: 'Ideathon', date: 'Mid-Mar 2024', description: 'This Inter-college event was conducted aiming to foster innovation and collaboration. This was also a trial event for FLORENCE’24.' },
-    { title: 'Cipher Vault', date: '30 Aug 2024', description: 'Cryptography technical event.' },
-    { title: 'Make-A-thon', date: 'Sept 2024', description: 'Intercollege creative build event.' },
-    { title: 'Open-Source Oasis -sponsored by Openweaver', date: '13 Mar 2024', description: 'This workshop sponsored by Openweaver, was conducted in which about 180 students from various departments have participated.' },
-    { title: 'Debug your career path', date: '18 Sept 2024', description: 'This workshop was conducted for profile building and career guidance.' },
-    { title: 'Symposium', date: '12&13 Sept 2024', description: 'In celebration of World Engineers Day, the club conducted a technical symposium.' },
-    { title: 'Research Route', date: '22 Jan 2025', description: 'This workshop was conducted in offline in IST 101. The aim of the workshop was to provide students with insights into research paper, projects, patent, funding opportunities and publishing techniques. As speakers, Rayean Patric (IEEE Chairperson) explained about Research and IEEE Student benefits, and Bharat Kumar (IEEE Epic Winner) addressed about the projects, patents and fundings. Around 100 students from various departments attended the workshop where they liked the interactive discussion and gained knowledge to pursue academic and professional goals.' },
-];
-
-const upcomingEvents = [
-    { title: 'Git&IOT Initiative', date: 'Mid-Jul 2025', description: 'Git: Hands-on Git & collaboration. IoT: Real-world IoT guided sessions.' }
-];
 </script>
 
 <style scoped>

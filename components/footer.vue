@@ -6,9 +6,10 @@
                     <span class="footer-text-primary">FOSS</span>
                     <a href="/" class="footer-text-secondary footer-link">Home</a>
                     <a href="/events" class="footer-text-secondary footer-link">Events</a>
+                    <a href="/projects" class="footer-text-secondary footer-link">Projects</a>
                     <a href="/forum" class="footer-text-secondary footer-link">Forum</a>
-                    <a href="/eventgallery" class="footer-text-secondary footer-link">Gallery</a>
-                    <a href="/join" class="footer-text-secondary footer-link">Join FOSS</a>
+                    <a href="/blog" class="footer-text-secondary footer-link">Blog</a>
+                    <a href="/contribute" class="footer-text-secondary footer-link">Contribute</a>
                 </div>
                 <div class="footer-link-list">
                     <span class="footer-text-primary">About</span>
@@ -35,6 +36,8 @@
                 </div>
                 <div class="footer-link-list">
                     <span class="footer-text-primary">Events</span>
+                    <a href="/eventgallery" class="footer-text-secondary footer-link">Gallery</a>
+                    <a href="/eventregistration" class="footer-text-secondary footer-link">Registration</a>
                 </div>
             </div>
             <div class="footer-info-container">

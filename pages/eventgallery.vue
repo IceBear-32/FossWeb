@@ -1,2 +1,181 @@
 <template>
+    <div class="events-gallery-container">
+        <div class="hero-section">
+            <div class="hero-animation"></div>
+            <div class="hero-title-container">
+                <p class="hero-title">Our <span class="highlight">Event Gallery</span></p>
+            </div>
+        </div>
+        <div class="events-gallery-section">
+            <div class="events-gallery-content">
+                <div class="events-gallery-title-container">
+                    <p class="events-gallery-content-title highlight">GALLERY</p>
+                    <p class="events-gallery-content-description">Step into our world of innovation, collaboration, and
+                        creativity. This gallery showcases the vibrant moments from our past FOSS events — from
+                        interactive workshops and tech talks to hands-on hackathons and community-driven initiatives.
+                    </p>
+                </div>
+                <div class="gallery-container">
+                    <a v-for="(event, index) in filteredEvents" :key="index" class="gallery-item"
+                        :href="`/event/${index}`" :style="event.thumbnail
+                            ? { backgroundImage: `url('${event.thumbnail}')`, backgroundSize: 'cover', backgroundPosition: 'center' }
+                            : { backgroundColor: 'var(--color-counter-secondary)' }">
+                        <i class="bi bi-images gallery-images-icon"></i>
+                        <div class="gallery-item-details">
+                            <h3 class="gallery-item-title highlight">{{ event.title }}</h3>
+                            <p class="gallery-item-redirect"><i class="bi bi-link"></i> Click to view gallery</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
+
+<script setup>
+import { pastEvents } from '@/assets/js/events_details';
+
+const filteredEvents = pastEvents.filter(event => event.gallery);
+
+const { $supabase } = useNuxtApp();
+</script>
+
+<style scoped>
+.hero-section {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 80px;
+}
+
+.hero-animation {
+    width: 100%;
+    background: url('https://i.giphy.com/3o6Zt0EiSgr1cWE6WY.webp');
+    height: 300px;
+    overflow: hidden;
+    background-size: cover;
+}
+
+.hero-title-container {
+    display: flex;
+    flex-direction: row;
+    font-size: 40px;
+    letter-spacing: -0.1rem;
+    line-height: 1.3;
+    font-weight: bold;
+    margin-top: -240px;
+}
+
+.hero-title {
+    text-shadow: 2px 2px black;
+}
+
+.events-gallery-section {
+    background-color: var(--color-primary);
+}
+
+.events-gallery-content {
+    padding: 3rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-border-primary);
+    margin: 0 200px;
+    transform: translateY(-40px);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.events-gallery-content-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.events-gallery-content-description {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.events-gallery-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.2rem;
+    padding-top: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    box-shadow: 1px 1px 10px var(--color-counter-primary) inset;
+    min-height: 200px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.gallery-item:hover {
+    box-shadow: 1px 1px 15px var(--color-counter-secondary) inset;
+    transform: scale(1.02);
+    border: 1px solid var(--color-border-primary);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.gallery-item-details {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background-color: var(--color-primary);
+    border-bottom-right-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+.gallery-item-details h3,
+.gallery-item-details p {
+    margin: 0;
+}
+
+.gallery-item:hover .gallery-item-details {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item-title {
+    font-size: 1.2rem;
+    letter-spacing: -0.05rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.gallery-item-redirect {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+.bi-link {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+}
+
+.gallery-images-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+}
+</style>

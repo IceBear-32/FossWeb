@@ -1,5 +1,6 @@
 :root {
   --color-primary: #1a2c38;
+  --color-primary-80: rgba(26, 44, 56, 0.8);
   --color-counter-primary: #25475c;
   --color-counter-secondary: #2e5f77;
 

@@ -26,7 +26,7 @@
                         innovation — one rooted in openness, community, and a shared drive to build for the world.</p>
                 </div>
                 <div class="info-sub-cards-section">
-                    <SubCard class="sub-card" tag="MISSION" bulletlist=true description="Promote open source awareness and ethics.
+                    <SubCard class="sub-card" tag="MISSION" :bulletlist=true description="Promote open source awareness and ethics.
                                 Enable student contributions to global projects.
                                 Host hands-on workshops, events, and hackathons.
                                 Build skills through collaboration and mentorship." />
@@ -58,7 +58,7 @@ import Credentials from '@/components/credentials.vue';
 
 import { ref } from 'vue';
 const showCredsModal = ref(false);
-const redirUrl = ref('');
+const redirUrl = ref('/');
 
 const userLoggedIn = ref(false);
 

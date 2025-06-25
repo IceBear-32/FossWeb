@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.50.1",
     "bootstrap-icons": "^1.13.1",
     "nuxt": "^3.17.4",
     "vite-tsconfig-paths": "^5.1.4",
