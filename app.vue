@@ -3,11 +3,16 @@
     <div class="main-container">
         <NavBar />
         <div class="page-content">
-            <NuxtPage :user-is-admin="userIsAdmin" :user-logged-in="userLoggedIn"/>
+            <NuxtPage :user-is-admin="userIsAdmin" :user-logged-in="userLoggedIn" />
         </div>
         <Footer />
     </div>
+
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    </head>
 </template>
+
 
 <style>
 body {
@@ -38,8 +43,6 @@ body {
 <script setup>
 import NavBar from '@/components/navbar.vue'
 import Footer from '@/components/footer.vue'
-
-import '@/node_modules/bootstrap-icons/font/bootstrap-icons.css'
 
 import { ref } from 'vue'
 
