@@ -39,6 +39,8 @@ body {
 import NavBar from '@/components/navbar.vue'
 import Footer from '@/components/footer.vue'
 
+import '@/node_modules/bootstrap-icons/font/bootstrap-icons.css'
+
 import { ref } from 'vue'
 
 const userIsAdmin = ref(false)
