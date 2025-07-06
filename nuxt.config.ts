@@ -11,5 +11,8 @@ export default defineNuxtConfig({
   },
   build: {
     transpile: ['qrcode.vue']
+  },
+  nitro: {
+    preset: 'cloudflare'
   }
 })

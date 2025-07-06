@@ -1,0 +1,5 @@
+name = "fossweb"
+type = "typescript"
+account_id = "488676b9a559559dc3e083b02f3187e0"
+workers_dev = true
+compatibility_date = "2025-07-06"
