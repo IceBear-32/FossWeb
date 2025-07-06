@@ -4,7 +4,7 @@ import svgLoader from 'vite-svg-loader'
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
-  css: ['@/assets/css/color_defs.css', 'bootstrap-icons/font/bootstrap-icons.css'],
+  css: ['@/assets/css/color_defs.css', ],
   ssr: true,
   vite: {
     plugins: [svgLoader()]
