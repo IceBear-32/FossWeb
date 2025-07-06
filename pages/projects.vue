@@ -57,6 +57,7 @@
 
 <script>
 import { github_org_link } from '@/assets/js/global';
+
 export default {
     data() {
         return {
@@ -77,7 +78,8 @@ export default {
                     tech: ['Python', 'TensorFlow', 'Gradio', 'Groq LLM API'],
                 },
             ],
-            boxShadowStyles: {}
+            boxShadowStyles: {},
+            github_org_link
         };
     },
     methods: {

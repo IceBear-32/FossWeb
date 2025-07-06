@@ -72,7 +72,6 @@ const toggleMenu = () => {
   background-color: var(--color-counter-secondary);
 }
 
-/* --- Mobile --- */
 @media (max-width: 900px) {
   .navbar {
     padding: 1rem 24px;
@@ -97,6 +96,7 @@ const toggleMenu = () => {
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     margin-top: 0.5rem;
     opacity: 0;
+    gap: 0;
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.3s ease;

@@ -52,7 +52,7 @@
                     <a href="#" class="footer-social-icon"><i class="bi bi-facebook"></i></a>
                     <a href="#" class="footer-social-icon"><i class="bi bi-twitter-x"></i></a>
                     <a href="#" class="footer-social-icon"><i class="bi bi-linkedin"></i></a>
-                    <a :href="github_org_link" class="footer-social-icon"><i class="bi bi-github"></i></a>
+                    <a :href="github_org_link" class="footer-social-icon" target="_blank"><i class="bi bi-github"></i></a>
                 </div>
             </div>
         </div>
