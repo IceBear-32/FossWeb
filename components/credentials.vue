@@ -9,13 +9,13 @@
     &times;
     </button>
 
-    <h2>{{ isSignUp ? 'Sign Up' : 'Sign In' }}</h2>
+    <h2 class="highlight">{{ isSignUp ? 'Sign Up' : 'Sign In' }}</h2>
 
     <form @submit.prevent="handleSubmit">
       <input v-if="isSignUp" v-model="form.name" type="text" placeholder="Name" />
-      <input v-model="form.email" type="email" placeholder="Email" />
+      <input v-model="form.email" type="email" placeholder="Email" required />
       <input v-if="isSignUp" v-model="form.phone" type="tel" placeholder="Phone" />
-      <input v-model="form.password" type="password" placeholder="Password" />
+      <input v-model="form.password" type="password" placeholder="Password" required />
 
       <div class="remember-me" v-if="!isSignUp">
         <input v-model="form.remember" type="checkbox" id="remember" />

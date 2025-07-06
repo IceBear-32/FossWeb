@@ -6,7 +6,7 @@
         <div class="hero-section">
             <div class="hero-animation"></div>
             <div class="hero-title-container">
-                <p class="hero-title">Be Part of <span class="highlight">The FOSS Revolution</span></p>
+                <p class="hero-title">Be Part a of <span class="highlight">The FOSS Revolution</span></p>
             </div>
         </div>
         <div class="info-card">
@@ -56,11 +56,27 @@
 import SubCard from '@/components/sub_card.vue';
 import Credentials from '@/components/credentials.vue';
 
-import { ref } from 'vue';
+import { ref , onMounted} from 'vue';
 const showCredsModal = ref(false);
 const redirUrl = ref('/');
 
-const userLoggedIn = ref(false);
+const props = defineProps({
+    userIsAdmin: {
+        type: Boolean,
+        default: false
+    },
+    userLoggedIn: {
+        type: Boolean,
+        default: false
+    }
+});
+
+onMounted(() => {
+    if (props.userIsAdmin) {
+        if(confirm("Logged in as admin. Redirect to admin panel?"))
+            window.location.href = '/admin';
+    }
+});
 
 </script>
 

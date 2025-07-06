@@ -8,5 +8,8 @@ export default defineNuxtConfig({
   ssr: true,
   vite: {
     plugins: [svgLoader()]
+  },
+  build: {
+    transpile: ['qrcode.vue']
   }
 })

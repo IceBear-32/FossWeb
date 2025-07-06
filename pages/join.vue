@@ -10,7 +10,7 @@ import Credentials from '@/components/credentials.vue'
 
 <style scoped>
 .login-form-container {
-    height: 89vh;
+    padding: 21.5vh 200px;
     display: flex;
     justify-content: center;
     align-items: center;

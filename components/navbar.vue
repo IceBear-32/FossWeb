@@ -5,8 +5,9 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/events">Events</a></li>
                 <li><a href="/projects">Projects</a></li>
-                <li><a href="/forum">Forum</a></li>
+                <!--<li><a href="/forum">Forum</a></li>
                 <li><a href="/blog">Blog</a></li>
+            -->
                 <li><a href="/join">Join FOSS</a></li>
             </ul>
         </nav>

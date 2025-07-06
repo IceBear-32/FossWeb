@@ -3,7 +3,7 @@
     <div class="main-container">
         <NavBar />
         <div class="page-content">
-            <NuxtPage />
+            <NuxtPage :user-is-admin="userIsAdmin" :user-logged-in="userLoggedIn"/>
         </div>
         <Footer />
     </div>
@@ -38,4 +38,9 @@ body {
 <script setup>
 import NavBar from '@/components/navbar.vue'
 import Footer from '@/components/footer.vue'
+
+import { ref } from 'vue'
+
+const userIsAdmin = ref(false)
+const userLoggedIn = ref(false)
 </script>

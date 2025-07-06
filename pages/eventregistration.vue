@@ -1,67 +1,56 @@
 <template>
-  <div class="registration-container">
-    <!-- Registration Form -->
-    <div v-if="!submitted">
-      <h1>Event Registration</h1>
-      <form @submit.prevent="register">
-        <label>Select Event:</label>
-        <select v-model="selectedEvent">
-          <option v-for="event in events" :key="event.name" :value="event">
-            {{ event.name }}
-          </option>
-        </select>
+  <div class="registration-form-container">
+    <div class="auth-container">
+      <h2 v-if="!submitted" class="highlight">Event Registration</h2>
 
-        <label>Name:</label>
-        <input v-model="userName" type="text" required placeholder="Enter your name" />
+      <div v-if="!submitted">
+        <form @submit.prevent="register">
+          <select v-model="selectedEvent">
+            <option v-for="event in events" :key="event.name" :value="event">
+              {{ event.name }}
+            </option>
+          </select>
 
-        <label>Register Number:</label>
-        <input v-model="regNo" type="text" required placeholder="Enter register number" />
+          <input v-model="userName" type="text" placeholder="Name" required />
+          <input v-model="regNo" type="text" placeholder="Register Number" required />
+          <input v-model="email" type="email" placeholder="Email" required />
 
-        <label>Email:</label>
-        <input v-model="email" type="email" required placeholder="Enter email" />
-
-        <button type="submit">Register</button>
-      </form>
-    </div>
-
-    <!-- Confirmation + QR Code -->
-    <div v-else>
-      <h2>Registration Successful!</h2>
-      <p>Details have been sent to your email.</p>
-      <p><strong>Name:</strong> {{ userName }}</p>
-      <p><strong>Register Number:</strong> {{ regNo }}</p>
-      <p><strong>Email:</strong> {{ email }}</p>
-      <p><strong>Event:</strong> {{ selectedEvent.name }}</p>
-
-      <div class="event-details">
-        <p><strong>Date:</strong> {{ selectedEvent.date }}</p>
-        <p><strong>Description:</strong> {{ selectedEvent.description }}</p>
-        <p v-if="selectedEvent.note"><strong>Note:</strong> {{ selectedEvent.note }}</p>
+          <button type="submit" class="submit-btn">Register</button>
+        </form>
       </div>
 
-      <div class="qr-code">
-        <qrcode-vue :value="qrContent" :size="200" />
+      <div v-else class="registered-info-container">
+        <h2 class="highlight">Registration Successful!</h2>
+        <p><strong>Name:</strong> {{ userName }}</p>
+        <p><strong>Reg No:</strong> {{ regNo }}</p>
+        <p><strong>Email:</strong> {{ email }}</p>
+        <p><strong>Event:</strong> {{ selectedEvent.name }}</p>
+
+        <div class="event-details">
+          <p><i class="bi bi-calendar"></i> {{ selectedEvent.date }}</p>
+          <p v-if="selectedEvent.note" class="event-note"><i class="bi bi-info-circle"></i> {{ selectedEvent.note }}</p>
+        </div>
+
+        <div class="qr-code">
+          <qrcode-vue :value="qrContent" :size="160" :level="'H'" :margin="3" />
+        </div>
+
+        <p class="event-footer">Details have been sent to your email.</p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import QrcodeVue from 'qrcode.vue'
 
 const events = ref([
   {
-    name: 'Git',
-    date: '2025-07-01',
-    description: 'Version control workshop',
-    note: 'Bring your laptop'
-  },
-  {
-    name: 'IOT Initiative',
-    date: '2025-07-10',
-    description: 'Intro to IoT and project ideas',
-    note: ''
+    name: 'Git&IoT Initiative',
+    date: '2025-07-16',
+    description: 'Version control workshop and intro to IoT',
+    note: 'Bring your laptop',
   }
 ])
 
@@ -71,37 +60,120 @@ const regNo = ref('')
 const email = ref('')
 const submitted = ref(false)
 
+// JSON string as QR content
+const qrContent = computed(() => {
+  return JSON.stringify({
+    name: userName.value,
+    regNo: regNo.value,
+    email: email.value,
+    event: selectedEvent.value.name
+  })
+})
+
 function register() {
   submitted.value = true
 }
-
-const qrContent = computed(() => {
-  const e = selectedEvent.value
-  return `Event: ${e.name}\nDate: ${e.date}\nDescription: ${e.description}\n${e.note ? `Note: ${e.note}` : ''}`
-})
 </script>
 
 <style scoped>
-.registration-container {
-  max-width: 500px;
-  margin: auto;
-  padding: 20px;
-  font-family: sans-serif;
+.registration-form-container {
+  padding: 19vh 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-form input, select, button {
-  display: block;
-  margin: 10px 0;
+
+.auth-container {
+  background: var(--color-primary);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  width: 320px;
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-container input,
+.auth-container select {
   padding: 8px;
-  width: 100%;
+  margin: 8px 0;
+  border-radius: 4px;
+  background-color: var(--color-counter-secondary);
+  color: var(--color-text-primary);
+  font-size: 15px;
+  font-weight: 500;
+  border: solid 1px var(--color-border-primary);
+  transition: border 0.3s ease, outline 0.3s ease;
 }
-button {
+
+.auth-container input:focus,
+.auth-container select:focus {
+  outline: solid 1px var(--color-highlight);
+}
+
+.auth-container input::placeholder,
+.auth-container select::placeholder {
+  color: var(--color-text-primary);
+  opacity: 0.5;
+} 
+
+.submit-btn {
+  padding: 10px;
+  margin-top: 1rem;
+  background: var(--color-button-primary);
+  color: var(--color-counter-primary);
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 }
+
+.submit-btn:hover {
+  background: var(--color-highlight);
+  color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-button-primary);
+  transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
 .event-details {
-  text-align: left;
-  margin: 20px auto;
+  margin-top: 1rem;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
 }
+
 .qr-code {
-  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+
+.registered-info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.registered-info-container p {
+  margin: 0;
+}
+
+.event-details {
+  color: var(--color-text-secondary);
+}
+
+.event-footer {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  text-align: center;
 }
 </style>

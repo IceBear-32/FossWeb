@@ -16,16 +16,25 @@
                     </p>
                 </div>
                 <div class="gallery-container">
-                    <a v-for="(event, index) in filteredEvents" :key="index" class="gallery-item"
-                        :href="`/event/${index}`" :style="event.thumbnail
+                    <div v-for="(event, index) in pastEvents" :key="index" class="gallery-item-outer">
+                        <i v-if="userIsAdmin" class="bi bi-pencil-square gallery-edit-icon"></i>
+                        <div class="gallery-item-inner" :style="event.thumbnail
                             ? { backgroundImage: `url('${event.thumbnail}')`, backgroundSize: 'cover', backgroundPosition: 'center' }
-                            : { backgroundColor: 'var(--color-counter-secondary)' }">
-                        <i class="bi bi-images gallery-images-icon"></i>
-                        <div class="gallery-item-details">
-                            <h3 class="gallery-item-title highlight">{{ event.title }}</h3>
-                            <p class="gallery-item-redirect"><i class="bi bi-link"></i> Click to view gallery</p>
+                            : { backgroundColor: 'var(--color-counter-secondary)' }" @click="redirectToGallery(index)">
+                            <i v-if="event.images.length > 0" class="bi gallery-images-icon" :class="event.images.length > 1 ? `bi-images` : `bi-image`"></i>
+                            <p v-if="event.images.length > 1" class="gallery-images-count">{{ event.images.length <= 9 ? event.images.length : "9+" }}</p>
+                            <p class="gallery-placeholder-text highlight" v-if="!event.thumbnail">
+                                {{event.images.length > 0 ? "No thumbnail available" : "Gallery unavailable"}}
+                            </p>
+                            <div class="gallery-item-details">
+                                <h3 class="gallery-item-title highlight">{{ event.title }}</h3>
+                                <p class="gallery-item-redirect">
+                                    <i class="bi bi-link"></i> Click to view gallery
+                                </p>
+                            </div>
                         </div>
-                    </a>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -34,8 +43,22 @@
 
 <script setup>
 import { pastEvents } from '@/assets/js/events_details';
+import { onMounted } from 'vue';
 
-const filteredEvents = pastEvents.filter(event => event.gallery);
+function redirectToGallery(index) {
+    if (props.userIsAdmin) {
+        window.location.href = `/event/${index}/edit`;
+    } else {
+        window.location.href = `/event/${index}`;
+    }
+}
+
+const props = defineProps({
+    userIsAdmin: {
+        type: Boolean,
+        default: false
+    }
+});
 
 const { $supabase } = useNuxtApp();
 </script>
@@ -114,22 +137,6 @@ const { $supabase } = useNuxtApp();
     border-radius: 0.5rem;
 }
 
-.gallery-item {
-    position: relative;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    box-shadow: 1px 1px 10px var(--color-counter-primary) inset;
-    min-height: 200px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-}
-
-.gallery-item:hover {
-    box-shadow: 1px 1px 15px var(--color-counter-secondary) inset;
-    transform: scale(1.02);
-    border: 1px solid var(--color-border-primary);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-}
-
 .gallery-item-details {
     position: absolute;
     right: 0;
@@ -148,7 +155,7 @@ const { $supabase } = useNuxtApp();
     margin: 0;
 }
 
-.gallery-item:hover .gallery-item-details {
+.gallery-item-inner:hover .gallery-item-details {
     opacity: 1;
     transition: opacity 0.3s ease;
 }
@@ -177,5 +184,70 @@ const { $supabase } = useNuxtApp();
     right: 1rem;
     font-size: 1rem;
     color: var(--color-text-primary);
+}
+
+.gallery-images-count {
+    position: absolute;
+    top: 1rem;
+    right: 0.7rem;
+    font-size: 0.65rem;
+    text-shadow: -2px -2px 2px var(--color-counter-secondary);
+    border-radius: 0.3rem;
+    min-width: 1rem;
+    text-align: center;
+    background-color: var(--color-counter-primary);
+    font-weight: 500;
+}
+
+.gallery-item-outer {
+    position: relative;
+    border-radius: 0.5rem;
+    min-height: 200px;
+}
+
+.gallery-edit-icon {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    font-size: 1rem;
+    padding: 1rem;
+    border-top-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    box-shadow: 0 0 0 1px var(--color-counter-secondary);
+    color: var(--color-text-primary);
+    background-color: var(--color-counter-primary);
+    z-index: 2;
+    transition: color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-item-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    box-shadow: 1px 1px 10px var(--color-counter-primary) inset;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.gallery-item-inner:hover {
+    box-shadow: 1px 1px 15px var(--color-counter-secondary) inset, 0px 0px 0px 1px var(--color-border-primary);
+    transform: scale(1.02);
+}
+
+.gallery-edit-icon:hover {
+    color: var(--color-highlight);
+    box-shadow: 0 0 0 2px var(--color-button-primary);
+    transition: color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-placeholder-text {
+    text-align: center;
+    font-weight: 600;
 }
 </style>

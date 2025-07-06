@@ -1,11 +1,11 @@
 <template>
   <div class="contact-container">
     <form class="contact-card" @submit.prevent="submitForm">
-        <h2 class="contact-card-title">Contact Us</h2>
+        <h2 class="contact-card-title highlight">Contact Us</h2>
         <input type="text" v-model="form.name" placeholder="Your name" required />
         <input type="email" v-model="form.email" placeholder="Your email" required />
         <input type="text" v-model="form.subject" placeholder="Subject" required />
-        <textarea v-model="form.description" placeholder="Describe your issue" rows="5"></textarea>
+        <textarea v-model="form.description" placeholder="Message" rows="5"></textarea>
         <button type="submit">Submit</button>
     </form>
   </div>
@@ -51,7 +51,6 @@ function submitForm() {
   font-weight: bold;
   align-self: center;
   margin-bottom: 1rem;
-  color: var(--color-text-primary);
 }
 
 input,
