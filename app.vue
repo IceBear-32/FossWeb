@@ -42,6 +42,6 @@ import Footer from '@/components/footer.vue'
 
 import { ref } from 'vue'
 
-const userIsAdmin = ref(false)
+const userIsAdmin = ref(true)
 const userLoggedIn = ref(false)
 </script>

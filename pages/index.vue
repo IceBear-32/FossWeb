@@ -154,6 +154,7 @@ onMounted(() => {
     font-weight: bold;
     z-index: 1;
     margin-top: -240px;
+    text-align: center;
 }
 
 .hero-title {
@@ -174,6 +175,7 @@ onMounted(() => {
     align-items: center;
     font-size: 30px;
     font-weight: bold;
+    text-align: center;
 }
 
 .member-card-btns {
@@ -225,4 +227,73 @@ onMounted(() => {
     align-items: center;
     z-index: 100;
 }
+
+/* ---------------------- */
+/* 📱 Responsive styles   */
+/* ---------------------- */
+
+/* From ~1150px down */
+@media (max-width: 1200px) {
+    .info-card-content {
+        margin: 0 80px;
+        padding: 32px;
+    }
+
+    .member-card {
+        padding: 40px 80px;
+    }
+}
+
+/* From ~800px down (tablet & phone) */
+@media (max-width: 768px) {
+    .info-card-content {
+        margin: 0 40px;
+        padding: 24px;
+    }
+
+    .info-sub-cards-section {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-title-container {
+        font-size: 28px;
+        margin-top: -200px;
+    }
+
+    .member-card {
+        padding: 30px 40px;
+    }
+
+    .member-card-btns {
+        grid-template-columns: 1fr;
+        padding: 0;
+    }
+
+    .member-card-title-container {
+        font-size: 24px;
+    }
+}
+
+/* Very small devices */
+@media (max-width: 500px) {
+    .info-card-content {
+        margin: 0 20px;
+        padding: 16px;
+    }
+
+    .member-card {
+        padding: 20px;
+    }
+
+    .hero-title-container {
+        font-size: 22px;
+        margin-top: -180px;
+    }
+
+    .member-btn {
+        font-size: 18px;
+        padding: 12px;
+    }
+}
+
 </style>

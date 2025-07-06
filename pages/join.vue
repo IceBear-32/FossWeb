@@ -15,4 +15,10 @@ import Credentials from '@/components/credentials.vue'
     justify-content: center;
     align-items: center;
 }
+
+@media (max-width: 500px) {
+    .login-form-container {
+        padding: 21.5vh 100px;
+    }
+}
 </style>

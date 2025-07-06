@@ -96,4 +96,44 @@ button:hover {
   box-shadow: 0 0 0 2px var(--color-button-primary);
   transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
+
+@media (max-width: 1150px) {
+  .contact-container {
+    padding: 5rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .contact-container {
+    padding: 4rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .contact-container {
+    padding: 3rem 2rem;
+  }
+  .contact-card {
+    padding: 1.5rem;
+  }
+  .contact-card-title {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 500px) {
+  .contact-container {
+    padding: 2rem 1rem;
+  }
+  .contact-card {
+    padding: 1.2rem;
+  }
+  .contact-card-title {
+    font-size: 20px;
+  }
+  input, textarea {
+    font-size: 14px;
+  }
+}
+
 </style>

@@ -44,7 +44,7 @@
 
             <div class="github-org-container">
             <p class="github-org-title">Visit Our <span class="highlight">Github Organization</span></p>
-            <a href="https://github.com/fosschapter" class="github-link-btn" target="_blank">
+            <a :href="github_org_link" class="github-link-btn" target="_blank">
                 <div class="link-btn-text">
                     <i class="bi bi-github link-btn-text"></i>
                     <p>Github</p>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import { github_org_link } from '@/assets/js/global';
 export default {
     data() {
         return {
@@ -369,6 +370,102 @@ export default {
 .link-btn-text i {
     margin-right: 0;
     transform: translateY(1.5px);
+}
+
+@media (max-width: 1200px) {
+  .projects-content {
+    margin: 0 100px;
+    padding: 32px;
+  }
+  .github-org-container {
+    padding: 40px 100px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .projects-content {
+    margin: 0 50px;
+    padding: 24px;
+  }
+
+  .github-org-container {
+    padding: 40px 50px;
+  }
+
+  .hero-title-container {
+    font-size: 30px;
+    margin-top: -200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-cards-container {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+
+  .centered-card {
+    width: 100%;
+  }
+
+  .github-org-title {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .github-link-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 500px) {
+  .projects-content {
+    margin: 0 20px;
+    padding: 16px;
+  }
+
+  .hero-title-container {
+    font-size: 24px;
+    margin-top: -160px;
+    text-align: center;
+  }
+
+  .project-card {
+    padding: 12px;
+  }
+
+  .project-card h2 {
+    font-size: 16px;
+  }
+
+  .github-org-title {
+    font-size: 20px;
+  }
+
+  .github-link-btn {
+    font-size: 14px;
+    padding: 0.75rem;
+  }
+
+  .link-btn-text {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .link-btn-text p {
+    font-size: 14px;
+  }
+
+  .tech-tag {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
 }
 
 </style>

@@ -250,4 +250,51 @@ const { $supabase } = useNuxtApp();
     text-align: center;
     font-weight: 600;
 }
+
+@media (max-width: 1150px) {
+  .events-gallery-content {
+    margin: 0 150px;
+  }
+}
+
+@media (max-width: 900px) {
+  .events-gallery-content {
+    margin: 0 100px;
+  }
+}
+
+@media (max-width: 700px) {
+  .events-gallery-content {
+    margin: 0 50px;
+    padding: 2rem;
+  }
+  .hero-title-container {
+    font-size: 32px;
+  }
+  .gallery-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 500px) {
+  .events-gallery-content {
+    margin: 0 20px;
+    padding: 1.5rem;
+  }
+  .hero-title-container {
+    font-size: 28px;
+  }
+  .gallery-container {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  .gallery-item-title {
+    font-size: 1rem;
+  }
+  .gallery-item-redirect {
+    font-size: 0.6rem;
+  }
+  .events-gallery-content-description {
+    font-size: 14px;
+  }
+}
 </style>

@@ -118,6 +118,7 @@ const openUpcomingEventsModal = ref(false);
     line-height: 1.3;
     font-weight: bold;
     margin-top: -240px;
+    text-align: center;
 }
 
 .hero-title {
@@ -209,7 +210,6 @@ const openUpcomingEventsModal = ref(false);
     background: var(--color-highlight);
     color: var(--color-primary);
     box-shadow: 0 0 0 2px var(--color-button-primary);
-    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 }
 
 .timeline-link-btn {
@@ -325,4 +325,70 @@ const openUpcomingEventsModal = ref(false);
     background-color: var(--color-highlight);
     border-radius: 2rem;
 }
+
+/* ---------------------- */
+/* 📱 Responsive styles   */
+/* ---------------------- */
+
+/* Medium screens (below 1150px) */
+@media (max-width: 1200px) {
+    .events-content {
+        margin: 0 80px;
+        padding: 2rem;
+    }
+}
+
+/* Tablets & smaller (below 800px) */
+@media (max-width: 768px) {
+    .events-content {
+        margin: 0 40px;
+        padding: 1.5rem;
+    }
+
+    .events-timeline-container {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-title-container {
+        font-size: 28px;
+        margin-top: -200px;
+    }
+
+    .events-content-description {
+        font-size: 14px;
+    }
+}
+
+/* Small phones (below 500px) */
+@media (max-width: 500px) {
+    .events-content {
+        margin: 0 16px;
+        padding: 1rem;
+    }
+
+    .hero-title-container {
+        font-size: 22px;
+        margin-top: -180px;
+    }
+
+    .events-content-description {
+        font-size: 13px;
+    }
+
+    .timeline-btn-split {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0 0.5rem; /* add left/right padding so buttons don't touch edges */
+}
+
+.view-timeline-btn,
+.timeline-link-btn {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.5rem;        /* controls inside padding */
+    font-size: 12px;
+    box-sizing: border-box; /* ensures padding doesn't cause overflow */
+}
+}
+
 </style>

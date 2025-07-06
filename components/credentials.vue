@@ -141,7 +141,7 @@ const handleSubmit = () => {
   transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.auth-container .toggle-link {
+.toggle-link {
   margin-top: 1rem;
   text-align: center;
   color: var(--color-text-secondary);
@@ -221,6 +221,48 @@ const handleSubmit = () => {
   color: var(--color-primary);
   box-shadow: 0 0 0 2px var(--color-button-primary);
   transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (max-width: 1150px) {
+  .auth-container {
+    margin: 2rem auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .auth-container {
+    margin: 2rem auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .auth-container {
+    width: 260px;
+    padding: 1.5rem;
+  }
+  .auth-container h2 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .auth-container {
+    width: 240px;
+    padding: 1.2rem;
+  }
+  .auth-container h2 {
+    font-size: 1.2rem;
+  }
+  .auth-container input[type="text"],
+  .auth-container input[type="email"],
+  .auth-container input[type="password"],
+  .auth-container input[type="tel"] {
+    font-size: 14px;
+    padding: 7px;
+  }
+  .auth-container .submit-btn {
+    padding: 8px;
+  }
 }
 
 </style>

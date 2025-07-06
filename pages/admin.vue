@@ -1,6 +1,6 @@
 <template>
     <div class="admin-container">
-        <Credentials :show-sign-up="false" />
+        <Credentials :show-sign-up="false" redir="/" />
     </div>
 </template>
 

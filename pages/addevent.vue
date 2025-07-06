@@ -188,4 +188,46 @@ const submitEvent = () => {
   box-shadow: 0 0 0 2px var(--color-button-primary);
   transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, color 0.3s ease;
 }
+
+@media (max-width: 1150px) {
+  .upload-container {
+    margin: 80px auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .upload-container {
+    max-width: 350px;
+    margin: 70px auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .upload-container {
+    max-width: 320px;
+    margin: 60px auto;
+    padding: 1.5rem;
+  }
+  .upload-title {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .upload-container {
+    max-width: 100%;
+    margin: 40px 20px;
+    padding: 1.2rem;
+  }
+  .upload-title {
+    font-size: 1.2rem;
+  }
+  .drop-zone {
+    padding: 1rem;
+  }
+  .drop-text {
+    font-size: 0.8rem;
+  }
+}
+
 </style>

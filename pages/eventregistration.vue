@@ -176,4 +176,45 @@ function register() {
   font-size: 12px;
   text-align: center;
 }
+
+@media (max-width: 1150px) {
+  .registration-form-container {
+    padding: 15vh 150px;
+  }
+}
+
+@media (max-width: 900px) {
+  .registration-form-container {
+    padding: 10vh 100px;
+  }
+}
+
+@media (max-width: 700px) {
+  .registration-form-container {
+    padding: 10vh 50px;
+  }
+  .auth-container {
+    width: 280px;
+  }
+}
+
+@media (max-width: 500px) {
+  .registration-form-container {
+    padding: 8vh 20px;
+  }
+  .auth-container {
+    width: 100%;
+    padding: 1.5rem;
+  }
+  .submit-btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+  .auth-container input,
+  .auth-container select {
+    font-size: 14px;
+    padding: 6px;
+  }
+}
+
 </style>

@@ -1,5 +1,6 @@
 <template>
     <footer class="footer">
+        <div class="footer-wrapper">
         <div class="footer-content">
             <div class="footer-link-container">
                 <div class="footer-link-list">
@@ -25,9 +26,9 @@
                     <span class="footer-text-primary">Socials</span>
                     <a href="" class="footer-text-secondary footer-link">Instagram</a>
                     <a href="" class="footer-text-secondary footer-link">Facebook</a>
-                    <a href="" class="footer-text-secondary footer-link">Twitter</a>
+                    <a href="" class="footer-text-secondary footer-link">X (Twitter)</a>
                     <a href="" class="footer-text-secondary footer-link">LinkedIn</a>
-                    <a href="" class="footer-text-secondary footer-link">GitHub</a>
+                    <a :href="github_org_link" class="footer-text-secondary footer-link">GitHub</a>
                 </div>
                 <div class="footer-link-list">
                     <span class="footer-text-primary">Contact</span>
@@ -40,29 +41,54 @@
                     <a href="/eventregistration" class="footer-text-secondary footer-link">Registration</a>
                 </div>
             </div>
-            <div class="footer-info-container">
-                
+            <div class="footer-info-wrapper">
+                <div class="footer-info-container">
+                    <p class="footer-info-title">FOSS Chapter (IEEE)</p>
+                <p class="footer-info-org-grp">SRM Institute of Science & Technology</p>
+                <p class="footer-info-org-grp">Tiruchirappalli</p>
+                </div>
+                <div class="footer-info-socials">
+                    <a href="#" class="footer-social-icon"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="footer-social-icon"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="footer-social-icon"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" class="footer-social-icon"><i class="bi bi-linkedin"></i></a>
+                    <a :href="github_org_link" class="footer-social-icon"><i class="bi bi-github"></i></a>
+                </div>
             </div>
+        </div>
         </div>
     </footer>
 </template>
 
 <style scoped>
+
 .footer {
     background-color: var(--color-primary-footer);
-    padding: 70px 200px;
-    
+}
+
+.footer-wrapper {
+    padding: 0 80px;
+    margin: 0 50px;
 }
 
 .footer-content {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+    padding: 70px 0;
+    align-items: center;
+    width: 100%;
 }
 
 .footer-text-primary {
     color: var(--color-text-primary-footer);
     font-size: 20px;
     font-weight: bold;
+}
+.footer-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .footer-text-secondary {
@@ -87,4 +113,138 @@
     flex-direction: column;
     gap: 10px;
 }
+
+.footer-info-container p {
+    margin: 0;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.footer-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: right;
+}
+
+.footer-info-title {
+    color: var(--color-highlight);
+}
+
+.footer-info-socials {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    font-size: 1.2rem;
+    gap: 0.5rem;
+}
+
+.footer-social-icon {
+    text-decoration: none;
+    color: var(--color-text-secondary-footer);
+    padding: 1rem;
+    transition: color 0.3 ease;
+}
+
+.footer-social-icon:hover {
+    color: var(--color-text-primary-footer);
+    transition: color 0.3 ease;
+}
+
+
+@media (max-width: 1200px) {
+    .footer-wrapper {
+        padding: 0 50px;
+        margin: 0 30px;
+    }
+    .footer-text-primary {
+        font-size: 1rem;
+    }
+    .footer-text-secondary {
+        font-size: 12px;
+    }
+    .footer-info-container p {
+        font-size: 12px;
+    }
+    .footer-info-socials {
+        font-size: 1.1rem;
+    }
+    .footer-info-wrapper {
+        gap: 0.7rem;
+    }
+    .footer-social-icon {
+        padding: 0.7rem;
+    }
+}
+
+@media (max-width: 880px) {
+    .footer-wrapper {
+        padding: 0 2rem;
+        margin: 0 100px;
+    }
+    .footer-content {
+        display: flex;
+        flex-direction: column;
+    }
+    .footer-link-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        justify-content: space-between;
+        gap: 2rem;
+        width: 100%;
+    }
+    .footer-text-primary {
+        font-size: 20px;
+    }
+    .footer-text-secondary {
+        font-size: 14px;
+    }
+    .footer-info-container {
+        align-items: start;
+        justify-content: left;
+        text-align: left;
+        width: 100%;
+    }
+    .footer-info-container p {
+        font-size: 14px;
+    }
+    .footer-info-socials {
+        align-self: end;
+        gap: 0.25rem;
+    }
+    .footer-info-wrapper {
+        margin-top: 2rem;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+@media (max-width: 550px) {
+    .footer-link-container {
+        justify-content: center;
+        gap: 2rem;
+        grid-template-columns: 1fr 1fr;
+    }
+    .footer-info-wrapper {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        justify-content: space-between;
+    }
+    .footer-info-socials {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    .footer-social-icon {
+        padding: 0.25rem;
+    }
+}
+
 </style>
+
+<script setup>
+import { github_org_link } from '@/assets/js/global';
+</script>
