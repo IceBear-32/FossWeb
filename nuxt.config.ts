@@ -14,5 +14,10 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'cloudflare'
+  },
+  app: {
+    head: {
+      link: [{rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css'}]
+    }
   }
 })
