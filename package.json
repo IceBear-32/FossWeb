@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.50.1",
     "bootstrap-icons": "^1.13.1",
+    "html5-qrcode": "^2.3.8",
     "nuxt": "^3.17.4",
     "qrcode.vue": "^3.6.0",
     "vite-tsconfig-paths": "^5.1.4",

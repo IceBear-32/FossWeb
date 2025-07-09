@@ -74,7 +74,7 @@ const props = defineProps({
 onMounted(() => {
     if (props.userIsAdmin) {
         if(confirm("Logged in as admin. Redirect to admin panel?"))
-            window.location.href = '/admin';
+            window.location.href = '/admin/panel';
     }
 });
 
@@ -228,11 +228,7 @@ onMounted(() => {
     z-index: 100;
 }
 
-/* ---------------------- */
-/* 📱 Responsive styles   */
-/* ---------------------- */
 
-/* From ~1150px down */
 @media (max-width: 1200px) {
     .info-card-content {
         margin: 0 80px;
@@ -244,7 +240,7 @@ onMounted(() => {
     }
 }
 
-/* From ~800px down (tablet & phone) */
+
 @media (max-width: 768px) {
     .info-card-content {
         margin: 0 40px;
@@ -274,7 +270,7 @@ onMounted(() => {
     }
 }
 
-/* Very small devices */
+
 @media (max-width: 500px) {
     .info-card-content {
         margin: 0 20px;
