@@ -22,3 +22,7 @@ logs
 .env
 .env.*
 !.env.example
+
+# old credentials
+
+old_cred.txt
