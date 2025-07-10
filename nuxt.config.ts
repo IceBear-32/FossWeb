@@ -6,6 +6,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['@/assets/css/color_defs.css', ],
   ssr: true,
+  runtimeConfig: {
+    public: {
+      supabaseUrl: process.env.VITE_SUPABASE_URL,
+      supabaseAnonKey: process.env.VITE_SUPABASE_ANON_KEY,
+    }
+  },
   vite: {
     plugins: [svgLoader()]
   },
