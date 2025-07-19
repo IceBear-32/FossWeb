@@ -1,4 +1,5 @@
 <template>
+    <div v-if="adminRedir"></div>
     <div class="container">
         <div v-if="showCredsModal" class="creds-modal-overlay" @click.self="showCredsModal = false">
             <Credentials @close="showCredsModal = false" :redir="redirUrl" show-close-btn />
@@ -56,28 +57,19 @@
 import SubCard from '@/components/sub_card.vue';
 import Credentials from '@/components/credentials.vue';
 
-import { ref , onMounted} from 'vue';
+import { ref, onMounted, computed } from 'vue';
 const showCredsModal = ref(false);
 const redirUrl = ref('/');
 
-const props = defineProps({
-    userIsAdmin: {
-        type: Boolean,
-        default: false
-    },
-    userLoggedIn: {
-        type: Boolean,
-        default: false
-    }
-});
+const auth = useAuth()
 
-onMounted(() => {
-    if (props.userIsAdmin) {
-        if(confirm("Logged in as admin. Redirect to admin panel?"))
-            window.location.href = '/admin/panel';
-    }
-});
-
+const userLoggedIn = computed(() => auth.userLoggedIn.value)
+    const adminRedir = computed(() => {
+        if (auth.userIsAdmin.value && confirm("Logged in as admin. Redirect to admin panel?")) {
+            window.location.href = '/admin/panel'
+        }
+        else false
+    })
 </script>
 
 <style scoped>
@@ -291,5 +283,4 @@ onMounted(() => {
         padding: 12px;
     }
 }
-
 </style>

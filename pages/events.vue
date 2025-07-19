@@ -86,7 +86,48 @@
 <script setup>
 
 import { ref } from 'vue';
-import { pastEvents, upcomingEvents } from '@/assets/js/events_details.js';
+
+const pastEvents = ref([]);
+const upcomingEvents = ref([]);
+
+$fetch('/api/events/events', {
+    method: 'GET',
+    headers: { from: 'past' },
+    onResponse(response) {
+        if (response.response._data) {
+            pastEvents.value = response.response._data.events;
+        } else {
+            console.error('Failed to fetch past events:', response.statusText);
+        }
+    }
+})
+
+$fetch('/api/events/events', {
+    method: 'GET',
+    headers: { from: 'upcoming' },
+    onResponse(response) {
+        if (response.response._data) {
+            upcomingEvents.value = response.response._data.events;
+        } else {
+            console.error('Failed to fetch past events:', response.statusText);
+        }
+    }
+})
+
+$fetch('/api/events/editevent?id=2', {
+    method: 'POST',
+    body: {
+        updated_event: {
+            title: 'Git&IoT Initiative',
+            description: 'Version control workshop and intro to IoT',
+            date: '2025-07-16',
+            images: {
+                thumbnail: 'events/thumbnails/ice.png',
+                gallery: []
+            }
+        }
+    }
+})
 
 const openPastEventsModal = ref(false);
 const openUpcomingEventsModal = ref(false);
@@ -326,11 +367,6 @@ const openUpcomingEventsModal = ref(false);
     border-radius: 2rem;
 }
 
-/* ---------------------- */
-/* 📱 Responsive styles   */
-/* ---------------------- */
-
-/* Medium screens (below 1150px) */
 @media (max-width: 1200px) {
     .events-content {
         margin: 0 80px;

@@ -3,14 +3,8 @@
     <h2 class="upload-title highlight">Upload Event Details</h2>
 
     <form @submit.prevent="submitEvent" class="upload-form">
-      <div
-        class="drop-zone"
-        @dragover.prevent="isDragging = true"
-        @dragleave.prevent="isDragging = false"
-        @drop.prevent="handleDrop"
-        :class="{ dragging: isDragging }"
-        @click="triggerFileInput"
-      >
+      <div class="drop-zone" @dragover.prevent="isDragging = true" @dragleave.prevent="isDragging = false"
+        @drop.prevent="handleDrop" :class="{ dragging: isDragging }" @click="triggerFileInput">
         <p class="drop-text">
           Drag & drop or <span class="highlight">click</span> to upload event thumbnail
         </p>
@@ -40,16 +34,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const props = defineProps({
-    userIsAdmin: {
-        type: Boolean,
-        default: false
-    },
-    userLoggedIn: {
-        type: Boolean,
-        default: false
-    }
-});
+const userIsAdmin = ref(true)
 
 const thumbnail = ref(null)
 const preview = ref(null)
@@ -58,6 +43,13 @@ const description = ref('')
 const date = ref('')
 const isDragging = ref(false)
 const fileInput = ref(null)
+
+const toBase64 = file => new Promise((resolve, reject) => {
+  const reader = new FileReader()
+  reader.readAsDataURL(file)
+  reader.onload = () => resolve(reader.result)
+  reader.onerror = error => reject(error)
+})
 
 const handleFileChange = (e) => {
   const file = e.target.files[0]
@@ -81,7 +73,50 @@ const triggerFileInput = () => {
 }
 
 const submitEvent = () => {
-  console.log('Submitted:', { title: title.value, description: description.value, date: date.value })
+  const thumbnail_path = thumbnail.value ? `events/thumbnails/${title.value.replace(/\s+/g, '-').toLowerCase()}.${thumbnail.value.name.split('.').pop()}` : null
+  if (thumbnail_path) {
+    toBase64(thumbnail.value).then(base64 => {
+      $fetch('/api/storage/upload', {
+        method: 'POST',
+        body: {
+          path: thumbnail_path,
+          file: base64,
+          type: thumbnail.value.type
+      },
+        onResponse(response) {
+          if (response.response._data.message) {
+          } else {
+            console.error('Upload failed:', response.statusText)
+          }
+        }
+      })
+    }).catch(err => {
+      console.error('Error converting thumbnail to base64:', err)
+    })
+  }
+
+  $fetch('/api/events/addevent', {
+    method: 'POST',
+    body: {
+      title: title.value,
+      description: description.value,
+      date: date.value,
+      thumbnail: thumbnail.value ? thumbnail_path : null
+    },
+    onResponse(response) {
+      if (response.response._data.message) {
+        alert('Event submitted successfully!')
+        title.value = ''
+        description.value = ''
+        date.value = ''
+        thumbnail.value = null
+        preview.value = null
+      } else {
+        console.error('Event submission failed:', response.statusText)
+      }
+    }
+  })
+
   alert('Event submitted!')
 }
 </script>
@@ -92,7 +127,7 @@ const submitEvent = () => {
   margin: 95px auto;
   background: var(--color-primary);
   border-radius: 8px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   padding: 2rem;
 }
 
@@ -146,7 +181,8 @@ const submitEvent = () => {
   width: 100%;
 }
 
-.input, .textarea {
+.input,
+.textarea {
   width: 100%;
   background: var(--color-counter-secondary);
   color: var(--color-text-primary);
@@ -160,12 +196,14 @@ const submitEvent = () => {
   transition: border-color 0.3s, outline 0.3s ease;
 }
 
-.input:focus, .textarea:focus {
+.input:focus,
+.textarea:focus {
   border-color: var(--color-highlight);
   outline: none;
 }
 
-.input::placeholder, .textarea::placeholder {
+.input::placeholder,
+.textarea::placeholder {
   color: var(--color-text-primary);
   opacity: 0.5;
 }
@@ -208,6 +246,7 @@ const submitEvent = () => {
     margin: 60px auto;
     padding: 1.5rem;
   }
+
   .upload-title {
     font-size: 1.3rem;
   }
@@ -219,15 +258,17 @@ const submitEvent = () => {
     margin: 40px 20px;
     padding: 1.2rem;
   }
+
   .upload-title {
     font-size: 1.2rem;
   }
+
   .drop-zone {
     padding: 1rem;
   }
+
   .drop-text {
     font-size: 0.8rem;
   }
 }
-
 </style>

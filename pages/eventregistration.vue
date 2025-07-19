@@ -13,6 +13,7 @@
 
           <input v-model="userName" type="text" placeholder="Name" required />
           <input v-model="regNo" type="text" placeholder="Register Number" required />
+          <input v-model="Class" type="text" placeholder="Class (Dept-Sec, Year)" required />
           <input v-model="email" type="email" placeholder="Email" required />
 
           <button type="submit" class="submit-btn">Register</button>
@@ -23,6 +24,7 @@
         <h2 class="highlight">Registration Successful!</h2>
         <p><strong>Name:</strong> {{ userName }}</p>
         <p><strong>Reg No:</strong> {{ regNo }}</p>
+        <p><strong>Class:</strong> {{ Class }}</p>
         <p><strong>Email:</strong> {{ email }}</p>
         <p><strong>Event:</strong> {{ selectedEvent.name }}</p>
 
@@ -58,6 +60,7 @@ const selectedEvent = ref(events.value[0])
 const userName = ref('')
 const regNo = ref('')
 const email = ref('')
+const Class = ref('')
 const submitted = ref(false)
 
 // JSON string as QR content
@@ -65,8 +68,9 @@ const qrContent = computed(() => {
   return JSON.stringify({
     name: userName.value,
     regNo: regNo.value,
+    class: Class.value,
     email: email.value,
-    event: selectedEvent.value.name
+    event: selectedEvent.value.name,
   })
 })
 

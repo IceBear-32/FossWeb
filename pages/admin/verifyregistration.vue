@@ -67,8 +67,23 @@ const startScan = async () => {
   }
 }
 
-const verify = () => {
-    isVerified.value = true
+const verify = async () => {
+    const {data, error} = await useFetch('/api/events/verifyreg', {
+        method: 'POST',
+        body: {
+          title: parsedFields.value?.event,
+          pRegNo: parsedFields.value?.regNo,
+          pName: parsedFields.value?.name,
+          pClass: parsedFields.value?.class
+        }
+    })
+
+    if (error.value) {
+        console.error('Verification failed:', error.value)
+        return
+    }
+
+    else isVerified.value = true
 }
 
 onMounted(() => {

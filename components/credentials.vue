@@ -1,20 +1,18 @@
 <template>
   <div class="auth-container">
-    <button
-      v-if="showCloseBtn"
-      class="close-btn"
-      @click="$emit('close')"
-      aria-label="Close"
-    >
-    &times;
+    <button v-if="showCloseBtn" class="close-btn" @click="$emit('close')" aria-label="Close">
+      &times;
     </button>
 
     <h2 class="highlight">{{ isSignUp ? 'Sign Up' : 'Sign In' }}</h2>
 
+    <p class="error-message" v-if="credsError"><i class="bi bi-exclamation-triangle"></i> {{ credsError }}</p>
+    <p class="sign-up-success" v-if="signUpSuccess">Sign-up success</p>
+
     <form @submit.prevent="handleSubmit">
-      <input v-if="isSignUp" v-model="form.name" type="text" placeholder="Name" />
+      <input v-if="isSignUp" v-model="form.name" type="text" placeholder="Name" required />
       <input v-model="form.email" type="email" placeholder="Email" required />
-      <input v-if="isSignUp" v-model="form.phone" type="tel" placeholder="Phone" />
+      <input v-if="isSignUp" v-model="form.phone" type="tel" placeholder="Phone (optional)" />
       <input v-model="form.password" type="password" placeholder="Password" required />
 
       <div class="remember-me" v-if="!isSignUp">
@@ -22,17 +20,27 @@
         <label for="remember" class="remember-label">Remember me</label>
       </div>
 
-      <button type="submit" class="submit-btn">{{ isSignUp ? 'Register' : 'Login' }}</button>
+      <button type="submit" class="auth-btn">{{ isSignUp ? 'Register' : 'Login' }}</button>
     </form>
 
     <div v-if="showSignUp" class="toggle-link" @click="toggleForm">
       {{ isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up" }}
+    </div>
+
+    <div class="provider-auth-divider">
+      <p class="provider-auth-divider-dummy">'</p>
+    </div>
+
+    <div class="provider-auth">
+      <button class="google-auth" @click="signInWithGoogle"><i class="bi bi-google google-icon"></i> Sign {{ isSignUp ?
+        "Up" : "In" }}</button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+const { $supabase } = useNuxtApp()
 
 const props = defineProps({
   redir: {
@@ -52,37 +60,97 @@ const props = defineProps({
 })
 
 const isSignUp = ref(false)
+const signUpSuccess = ref(false)
 
 const form = ref({
   name: '',
   email: '',
-  phone: '',
+  phone: null,
   password: '',
   remember: false,
 })
 
+const credsError = ref('')
+
 const toggleForm = () => {
   isSignUp.value = !isSignUp.value
+  credsError.value = ''
 }
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
+  credsError.value = ''
+  signUpSuccess.value = false
   if (isSignUp.value) {
-    alert('Signing Up...')
+    await $fetch('/api/auth/signup', {
+      method: 'POST',
+      body: { email: form.value.email, password: form.value.password, name: form.value.name, phone: form.value.phone },
+      onResponseError: (error => {
+        error.response._data.error ? credsError.value = error.response._data.error : credsError.value = 'Sign up failed'
+      }),
+      onResponse: (data => {
+        if (data.response._data.user) {
+          credsError.value = ''
+          signUpSuccess.value = true
+          form.value.name = ''
+          form.value.email = ''
+          form.value.phone = null
+          form.value.password = ''
+          isSignUp.value = false
+
+          if (props.redir) window.location.href = props.redir
+        } else {
+          credsError.value = 'Sign up failed'
+        }
+      })
+    })
+
   } else {
-    alert('Signing In...')
+      await $fetch('/api/auth/login', {
+      method: 'POST',
+      body: { email: form.value.email, password: form.value.password, remember: form.value.remember },
+      onResponseError: (error => {
+        error.response._data.error ? credsError.value = error.response._data.error : credsError.value = 'Login failed'
+      }),
+      onResponse: (data => {
+        if (data.response._data.user) {
+          credsError.value = ''
+          if (props.redir) window.location.href = props.redir
+        } else {
+          credsError.value = 'Login failed'
+        }
+      })
+      })
   }
 
-  if (props.redir) window.location.href = props.redir
+}
+
+const signInWithGoogle = async () => {
+  credsError.value = ''
+  await $fetch('/api/auth/oauth', {
+    method: 'POST',
+    body: { provider: 'google', redirect: window.location.origin + '/api/auth/callback?redirect='+ encodeURIComponent(window.location.origin + props.redir || '/') },
+    onResponseError: (error => {
+      error.response._data.error ? credsError.value = error.response._data.error : credsError.value = 'OAuth failed'
+    }),
+    onResponse: (data => {
+      if (data.response._data.url) {
+        window.location.href = data.response._data.url
+      } else {
+        credsError.value = 'OAuth failed'
+      }
+    }
+    )
+  })
 }
 </script>
 
 <style scoped>
 .auth-container {
-    position: relative;
+  position: relative;
   background: var(--color-primary);
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   width: 300px;
   margin: auto;
 }
@@ -102,9 +170,10 @@ const handleSubmit = () => {
   opacity: 0.5;
 }
 
-.auth-container input:focus, .auth-container input:hover {
-    outline: solid 1px var(--color-highlight);
-    transition: outline 0.3s ease, border 0.3s ease;
+.auth-container input:focus,
+.auth-container input:hover {
+  outline: solid 1px var(--color-highlight);
+  transition: outline 0.3s ease, border 0.3s ease;
 }
 
 .auth-container input[type="text"],
@@ -122,7 +191,7 @@ const handleSubmit = () => {
   transition: border 0.3s ease, outline 0.3s ease;
 }
 
-.auth-container .submit-btn {
+.auth-btn {
   padding: 10px;
   margin-top: 1rem;
   background: var(--color-button-primary);
@@ -134,7 +203,7 @@ const handleSubmit = () => {
   transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.auth-container .submit-btn:hover {
+.auth-btn:hover {
   background: var(--color-highlight);
   color: var(--color-primary);
   box-shadow: 0 0 0 2px var(--color-button-primary);
@@ -223,6 +292,99 @@ const handleSubmit = () => {
   transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.provider-auth-divider {
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  position: relative;
+}
+
+.provider-auth-divider::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  padding: 1px;
+  background: var(--color-text-secondary);
+  z-index: 0;
+}
+
+.provider-auth-divider::after {
+  content: 'Or authenticate with';
+  position: absolute;
+  left: calc(50% - 4rem);
+  top: 0;
+  padding: 0 0.5rem;
+  z-index: 1;
+  background-color: var(--color-primary);
+}
+
+.provider-auth-divider-dummy {
+  opacity: 0;
+}
+
+.provider-auth {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.google-auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  color: var(--color-text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border-primary);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.google-auth:hover {
+  background-color: rgba(0, 191, 255, 0.1);
+  border-color: var(--color-highlight);
+  box-shadow: 0 0 8px var(--color-highlight);
+}
+
+.google-icon {
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+.error-message {
+  background-color: rgba(255, 0, 0, 0.2);
+  margin-top: 0.5rem;
+  font-weight: 500;
+  font-size: 14px;
+  border: 2px solid rgb(255, 69, 69);
+  color: rgb(255, 215, 215);
+  padding: 3px 0.5rem;
+  border-radius: 0.5rem;
+  margin: 0;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  transition: all 0.3s ease;
+}
+
+.sign-up-success {
+  background-color: rgba(0, 255, 0, 0.2);
+  color: rgb(60, 255, 60);
+  border: 2px solid rgb(0, 128, 0);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 3px 0.5rem;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  transition: all 0.3s ease;
+}
+
 @media (max-width: 1150px) {
   .auth-container {
     margin: 2rem auto;
@@ -240,6 +402,7 @@ const handleSubmit = () => {
     width: 260px;
     padding: 1.5rem;
   }
+
   .auth-container h2 {
     font-size: 1.3rem;
   }
@@ -250,9 +413,11 @@ const handleSubmit = () => {
     width: 240px;
     padding: 1.2rem;
   }
+
   .auth-container h2 {
     font-size: 1.2rem;
   }
+
   .auth-container input[type="text"],
   .auth-container input[type="email"],
   .auth-container input[type="password"],
@@ -260,9 +425,9 @@ const handleSubmit = () => {
     font-size: 14px;
     padding: 7px;
   }
+
   .auth-container .submit-btn {
     padding: 8px;
   }
 }
-
 </style>

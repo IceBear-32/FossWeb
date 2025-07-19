@@ -17,21 +17,22 @@
                 </div>
                 <div class="gallery-container">
                     <div v-for="(event, index) in pastEvents" :key="index" class="gallery-item-outer">
-                        <i v-if="userIsAdmin" class="bi bi-pencil-square gallery-edit-icon"></i>
-                        <div class="gallery-item-inner" :style="event.thumbnail
-                            ? { backgroundImage: `url('${event.thumbnail}')`, backgroundSize: 'cover', backgroundPosition: 'center' }
+                        <div class="gallery-item-inner" :style="event.images.thumbnail
+                            ? { backgroundImage: `url('/api/storage/fetch?path=${event.images.thumbnail}')`, backgroundSize: 'cover', backgroundPosition: 'center' }
                             : { backgroundColor: 'var(--color-counter-secondary)' }" @click="redirectToGallery(index)">
-                            <i v-if="event.images.length > 0" class="bi gallery-images-icon" :class="event.images.length > 1 ? `bi-images` : `bi-image`"></i>
-                            <p v-if="event.images.length > 1" class="gallery-images-count">{{ event.images.length <= 9 ? event.images.length : "9+" }}</p>
-                            <p class="gallery-placeholder-text highlight" v-if="!event.thumbnail">
-                                {{event.images.length > 0 ? "No thumbnail available" : "Gallery unavailable"}}
-                            </p>
-                            <div class="gallery-item-details">
-                                <h3 class="gallery-item-title highlight">{{ event.title }}</h3>
-                                <p class="gallery-item-redirect">
-                                    <i class="bi bi-link"></i> Click to view gallery
-                                </p>
-                            </div>
+                            <i v-if="event.images.gallery.length > 0" class="bi gallery-images-icon"
+                                :class="event.images.gallery.length > 1 ? `bi-images` : `bi-image`"></i>
+                            <p v-if="event.images.gallery.length > 1" class="gallery-images-count">{{
+                                event.images.gallery.length <= 9 ? event.images.gallery.length : "9+" }}</p>
+                                    <p class="gallery-placeholder-text highlight" v-if="!event.images.thumbnail">
+                                        {{ event.images.gallery.length > 0 ? "No thumbnail available" : "Gallery unavailable"}}
+                                    </p>
+                                    <div class="gallery-item-details">
+                                        <h3 class="gallery-item-title highlight">{{ event.title }}</h3>
+                                        <p class="gallery-item-redirect">
+                                            <i class="bi bi-link"></i> Click to view gallery
+                                        </p>
+                                    </div>
                         </div>
                     </div>
 
@@ -42,25 +43,23 @@
 </template>
 
 <script setup>
-import { pastEvents } from '@/assets/js/events_details';
-import { onMounted } from 'vue';
+const pastEvents = ref([]);
+
+$fetch('/api/events/events', {
+    method: 'GET',
+    headers: { from: 'past' },
+    onResponse(response) {
+        if (response.response._data) {
+            pastEvents.value = response.response._data.events;
+        } else {
+            console.error('Failed to fetch past events:', response.statusText);
+        }
+    }
+})
 
 function redirectToGallery(index) {
-    if (props.userIsAdmin) {
-        window.location.href = `/event/${index}/edit`;
-    } else {
-        window.location.href = `/event/${index}`;
-    }
+    window.location.href = `/gallery/${index+1}`;
 }
-
-const props = defineProps({
-    userIsAdmin: {
-        type: Boolean,
-        default: false
-    }
-});
-
-const { $supabase } = useNuxtApp();
 </script>
 
 <style scoped>
@@ -205,22 +204,6 @@ const { $supabase } = useNuxtApp();
     min-height: 200px;
 }
 
-.gallery-edit-icon {
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    font-size: 1rem;
-    padding: 1rem;
-    border-top-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-    box-shadow: 0 0 0 1px var(--color-counter-secondary);
-    color: var(--color-text-primary);
-    background-color: var(--color-counter-primary);
-    z-index: 2;
-    transition: color 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
 .gallery-item-inner {
     width: 100%;
     height: 100%;
@@ -252,49 +235,56 @@ const { $supabase } = useNuxtApp();
 }
 
 @media (max-width: 1150px) {
-  .events-gallery-content {
-    margin: 0 150px;
-  }
+    .events-gallery-content {
+        margin: 0 150px;
+    }
 }
 
 @media (max-width: 900px) {
-  .events-gallery-content {
-    margin: 0 100px;
-  }
+    .events-gallery-content {
+        margin: 0 100px;
+    }
 }
 
 @media (max-width: 700px) {
-  .events-gallery-content {
-    margin: 0 50px;
-    padding: 2rem;
-  }
-  .hero-title-container {
-    font-size: 32px;
-  }
-  .gallery-container {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
+    .events-gallery-content {
+        margin: 0 50px;
+        padding: 2rem;
+    }
+
+    .hero-title-container {
+        font-size: 32px;
+    }
+
+    .gallery-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
 }
 
 @media (max-width: 500px) {
-  .events-gallery-content {
-    margin: 0 20px;
-    padding: 1.5rem;
-  }
-  .hero-title-container {
-    font-size: 28px;
-  }
-  .gallery-container {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-  .gallery-item-title {
-    font-size: 1rem;
-  }
-  .gallery-item-redirect {
-    font-size: 0.6rem;
-  }
-  .events-gallery-content-description {
-    font-size: 14px;
-  }
+    .events-gallery-content {
+        margin: 0 20px;
+        padding: 1.5rem;
+    }
+
+    .hero-title-container {
+        font-size: 28px;
+    }
+
+    .gallery-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .gallery-item-title {
+        font-size: 1rem;
+    }
+
+    .gallery-item-redirect {
+        font-size: 0.6rem;
+    }
+
+    .events-gallery-content-description {
+        font-size: 14px;
+    }
 }
 </style>

@@ -8,18 +8,29 @@
         <li><a href="/">Home</a></li>
         <li><a href="/events">Events</a></li>
         <li><a href="/projects">Projects</a></li>
-        <li><a href="/join">Join FOSS</a></li>
+        <li v-if="userIsAdmin"><a href="/admin/panel">Admin Panel</a></li>
+        <li v-if="!userLoggedIn"><a href="/join">Join FOSS</a></li>
+        <li v-else><a href="/profile"><img class="profile-image" :src="auth.userProfile.value.avatar"> Profile</a></li>
       </ul>
     </nav>
   </header>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+
 const menuOpen = ref(false)
+
+const auth = useAuth()
+onMounted(async () => {await auth.getUser()})
+
+const userLoggedIn = computed(() => auth.userLoggedIn.value)
+const userIsAdmin = computed(() => auth.userIsAdmin.value)
+
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value
 }
 </script>
+
 <style scoped>
 * {
   margin: 0;
@@ -31,7 +42,7 @@ const toggleMenu = () => {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: .5px;
-  padding: 2rem 200px; /* generous vertical, wide horizontal */
+  padding: 2rem 200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -64,12 +75,22 @@ const toggleMenu = () => {
   text-decoration: none;
   padding: 8px 16px;
   border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .navbar-menu a:hover {
   color: var(--color-text-primary);
   background-color: var(--color-counter-secondary);
+}
+
+.profile-image {
+  max-height: 30px;
+  max-width: 30px;
+  border-radius: 1rem;
 }
 
 @media (max-width: 900px) {
@@ -93,7 +114,7 @@ const toggleMenu = () => {
     background: var(--color-primary);
     border: 1px solid var(--color-border-primary);
     border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     margin-top: 0.5rem;
     opacity: 0;
     gap: 0;
@@ -112,12 +133,14 @@ const toggleMenu = () => {
   }
 
   .navbar-menu a {
-    display: block;
+    display: flex;
     padding: 12px 16px;
+    justify-content: center;
     text-align: center;
   }
 
-  .navbar-menu ul, .navbar-menu li {
+  .navbar-menu ul,
+  .navbar-menu li {
     flex: none;
   }
 
@@ -125,12 +148,14 @@ const toggleMenu = () => {
     background-color: var(--color-counter-secondary);
     color: var(--color-text-primary);
   }
-  .navbar-menu ul li + li {
+
+  .navbar-menu ul li+li {
     border-top: 1px solid var(--color-divider);
-    }
-    .navbar-menu ul li {
-        justify-self: center;
-        width: 100%;
-    }
+  }
+
+  .navbar-menu ul li {
+    justify-self: center;
+    width: 100%;
+  }
 }
 </style>

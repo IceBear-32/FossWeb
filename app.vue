@@ -2,9 +2,8 @@
 <template>
     <div class="main-container">
         <NavBar />
-        <button @click="signInWithGoogle">Login</button>
         <div class="page-content">
-            <NuxtPage :user-is-admin="userIsAdmin" :user-logged-in="userLoggedIn" />
+            <NuxtPage />
         </div>
         <Footer />
     </div>
@@ -38,20 +37,4 @@ body {
 <script setup>
 import NavBar from '@/components/navbar.vue'
 import Footer from '@/components/footer.vue'
-const { $supabase } = useNuxtApp()
-import { ref } from 'vue'
-
-const signInWithGoogle = async () => {
-  const { error } = await $supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: window.location.origin,
-    }
-  })
-
-  if (error) console.error('OAuth error:', error.message)
-}
-
-const userIsAdmin = ref(false)
-const userLoggedIn = ref(false)
 </script>
