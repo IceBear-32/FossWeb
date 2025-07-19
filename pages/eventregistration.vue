@@ -1,13 +1,13 @@
 <template>
   <div class="registration-form-container">
-    <div class="auth-container">
+    <div class="form-container">
       <h2 v-if="!submitted" class="highlight">Event Registration</h2>
-
+      <template v-if="events.length > 0">
       <div v-if="!submitted">
         <form @submit.prevent="register">
           <select v-model="selectedEvent">
-            <option v-for="event in events" :key="event.name" :value="event">
-              {{ event.name }}
+            <option v-for="event in events" :key="event.title" :value="event">
+              {{ event.title }}
             </option>
           </select>
 
@@ -26,19 +26,20 @@
         <p><strong>Reg No:</strong> {{ regNo }}</p>
         <p><strong>Class:</strong> {{ Class }}</p>
         <p><strong>Email:</strong> {{ email }}</p>
-        <p><strong>Event:</strong> {{ selectedEvent.name }}</p>
+        <p><strong>Event:</strong> {{ selectedEvent.title }}</p>
 
         <div class="event-details">
           <p><i class="bi bi-calendar"></i> {{ selectedEvent.date }}</p>
-          <p v-if="selectedEvent.note" class="event-note"><i class="bi bi-info-circle"></i> {{ selectedEvent.note }}</p>
         </div>
 
         <div class="qr-code">
           <qrcode-vue :value="qrContent" :size="160" :level="'H'" :margin="3" />
         </div>
 
-        <p class="event-footer">Details have been sent to your email.</p>
+        <!--<p class="event-footer">Details have been sent to your email.</p>-->
       </div>
+    </template>
+      <p v-else class="event-footer">There are no upcoming events right now, stay tuned!</p>
     </div>
   </div>
 </template>
@@ -47,16 +48,16 @@
 import { ref, computed, watch } from 'vue'
 import QrcodeVue from 'qrcode.vue'
 
-const events = ref([
-  {
-    name: 'Git&IoT Initiative',
-    date: '2025-07-16',
-    description: 'Version control workshop and intro to IoT',
-    note: 'Bring your laptop',
-  }
-])
+const events = ref([])
 
-const selectedEvent = ref(events.value[0])
+$fetch('/api/events/events', {
+  headers: { from: 'upcoming' },
+  onResponse(res) {
+    if (res.response._data.events) events.value = res.response._data.events
+  }
+}).catch();
+
+const selectedEvent = computed(() => events.value[0])
 const userName = ref('')
 const regNo = ref('')
 const email = ref('')
@@ -70,7 +71,7 @@ const qrContent = computed(() => {
     regNo: regNo.value,
     class: Class.value,
     email: email.value,
-    event: selectedEvent.value.name,
+    event: selectedEvent.value.title,
   })
 })
 
@@ -87,7 +88,7 @@ function register() {
   align-items: center;
 }
 
-.auth-container {
+.form-container {
   background: var(--color-primary);
   padding: 2rem;
   border-radius: 8px;
@@ -95,18 +96,18 @@ function register() {
   width: 320px;
 }
 
-.auth-container h2 {
+.form-container h2 {
   text-align: center;
   margin-bottom: 1rem;
 }
 
-.auth-container form {
+.form-container form {
   display: flex;
   flex-direction: column;
 }
 
-.auth-container input,
-.auth-container select {
+.form-container input,
+.form-container select {
   padding: 8px;
   margin: 8px 0;
   border-radius: 4px;
@@ -118,13 +119,13 @@ function register() {
   transition: border 0.3s ease, outline 0.3s ease;
 }
 
-.auth-container input:focus,
-.auth-container select:focus {
+.form-container input:focus,
+.form-container select:focus {
   outline: solid 1px var(--color-highlight);
 }
 
-.auth-container input::placeholder,
-.auth-container select::placeholder {
+.form-container input::placeholder,
+.form-container select::placeholder {
   color: var(--color-text-primary);
   opacity: 0.5;
 } 
@@ -197,7 +198,7 @@ function register() {
   .registration-form-container {
     padding: 10vh 50px;
   }
-  .auth-container {
+  .form-container {
     width: 280px;
   }
 }
@@ -206,7 +207,7 @@ function register() {
   .registration-form-container {
     padding: 8vh 20px;
   }
-  .auth-container {
+  .form-container {
     width: 100%;
     padding: 1.5rem;
   }
@@ -214,8 +215,8 @@ function register() {
     font-size: 14px;
     padding: 8px;
   }
-  .auth-container input,
-  .auth-container select {
+  .form-container input,
+  .form-container select {
     font-size: 14px;
     padding: 6px;
   }

@@ -19,7 +19,7 @@
       </div>
 
       <div class="form-group">
-        <textarea v-model="description" placeholder="Event Description" rows="4" required class="textarea"></textarea>
+        <textarea v-model="description" placeholder="Event Description" rows="4" class="textarea"></textarea>
       </div>
 
       <div class="form-group">
@@ -72,7 +72,7 @@ const triggerFileInput = () => {
   fileInput.value.click()
 }
 
-const submitEvent = () => {
+const submitEvent = async () => {
   const thumbnail_path = thumbnail.value ? `events/thumbnails/${title.value.replace(/\s+/g, '-').toLowerCase()}.${thumbnail.value.name.split('.').pop()}` : null
   if (thumbnail_path) {
     toBase64(thumbnail.value).then(base64 => {
@@ -82,7 +82,7 @@ const submitEvent = () => {
           path: thumbnail_path,
           file: base64,
           type: thumbnail.value.type
-      },
+        },
         onResponse(response) {
           if (response.response._data.message) {
           } else {
@@ -95,7 +95,7 @@ const submitEvent = () => {
     })
   }
 
-  $fetch('/api/events/addevent', {
+  const res = await $fetch('/api/events/addevent', {
     method: 'POST',
     body: {
       title: title.value,
@@ -105,19 +105,20 @@ const submitEvent = () => {
     },
     onResponse(response) {
       if (response.response._data.message) {
-        alert('Event submitted successfully!')
         title.value = ''
         description.value = ''
         date.value = ''
         thumbnail.value = null
         preview.value = null
       } else {
-        console.error('Event submission failed:', response.statusText)
+        console.error('Event submission failed:', response.error.message)
       }
     }
   })
-
-  alert('Event submitted!')
+  if (!res.error) {
+    alert('Event submitted successfully!')
+    window.location.href = `/admin/events/edit-event/${res.event.id}`
+  }
 }
 </script>
 

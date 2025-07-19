@@ -3,7 +3,7 @@
     <div class="main-container">
         <NavBar />
         <div class="page-content">
-            <NuxtPage />
+            <NuxtPage v-if="adminChecked" />
         </div>
         <Footer />
     </div>
@@ -37,4 +37,9 @@ body {
 <script setup>
 import NavBar from '@/components/navbar.vue'
 import Footer from '@/components/footer.vue'
+
+const auth = useAuth()
+onMounted(async () => {await auth.getUser()})
+
+const adminChecked = computed(() => window && window.location && window.location.href.includes('admin') ? auth.userIsAdmin.value : true)
 </script>

@@ -22,39 +22,46 @@
 
     <div class="gallery-container">
         <div class="gallery-content">
-            <h1 class="highlight">Thumbnail</h1>
-            <p v-if="userIsAdmin" class="admin-info">*changes may take some time*</p>
-            <div class="thumbnail-content"
-                :style="!selected_event || !selected_event.images.thumbnail ? { backgroundColor: 'var(--color-counter-secondary)', minHeight: '20vh' } : { minHeight: '20vh' }"
-                @click="selected_event && selected_event.images.thumbnail ? openImage(selected_event.images.thumbnail) : null">
-                <p v-if="!selected_event || !selected_event.images.thumbnail" class="no-thumbnail-placeholder">No
-                    thumbnail found</p>
-                <img v-else class="image-item" :src="'/api/storage/fetch?path=' + selected_event.images.thumbnail"
-                    :alt="selected_event.images.thumbnail.split('/').pop()">
-                <div v-if="userIsAdmin" class="admin-toolbar">
-                    <i v-if="!selected_event || !selected_event.images.thumbnail"
-                        class="bi bi-plus admin-tool primary-btn" @click.stop="triggerFilePicker"></i>
-                    <template v-else>
-                        <i class="bi bi-pencil-square admin-tool primary-btn" @click.stop="triggerFilePicker"></i>
-                        <i class="bi bi-trash admin-tool danger-btn" @click.stop="deleteThumbnail"></i>
-                    </template>
-                </div>
-            </div>
-            <h1 class="highlight">Gallery</h1>
-            <p v-if="userIsAdmin" class="admin-info">*changes may take some time*</p>
-            <p v-if="!selected_event || selected_event.images.gallery.length == 0" class="empty-gallery-placeholder">
-                Event gallery is empty</p>
-            
-            <div v-else class="gallery-items-container">
-                <div class="gallery-item" v-for="(gallery_path, index) in selected_event.images.gallery" :key="index"
-                    @click="openImage(gallery_path)">
-                    <img class="image-item" :src="'/api/storage/fetch?path=' + gallery_path">
+            <template v-if="selected_event">
+                <h1 class="highlight">Thumbnail</h1>
+                <p v-if="userIsAdmin" class="admin-info">*changes may take some time*</p>
+                <div class="thumbnail-content"
+                    :style="!selected_event.images.thumbnail ? { backgroundColor: 'var(--color-counter-secondary)', minHeight: '20vh' } : { minHeight: '20vh' }"
+                    @click="selected_event.images.thumbnail ? openImage(selected_event.images.thumbnail) : null">
+                    <p v-if="!selected_event.images.thumbnail" class="no-thumbnail-placeholder">No
+                        thumbnail found</p>
+                    <img v-else class="image-item" :src="'/api/storage/fetch?path=' + selected_event.images.thumbnail"
+                        :alt="selected_event.images.thumbnail.split('/').pop()">
                     <div v-if="userIsAdmin" class="admin-toolbar">
-                        <i class="bi bi-trash admin-tool danger-btn" @click.stop="deleteGalleryItem(gallery_path)"></i>
+                        <i v-if="!selected_event.images.thumbnail" class="bi bi-plus admin-tool primary-btn"
+                            @click.stop="triggerFilePicker"></i>
+                        <template v-else>
+                            <i class="bi bi-pencil-square admin-tool primary-btn" @click.stop="triggerFilePicker"></i>
+                            <i class="bi bi-trash admin-tool danger-btn" @click.stop="deleteThumbnail"></i>
+                        </template>
                     </div>
                 </div>
-            </div>
-            <p class="admin-tool primary-btn" @click.stop="triggerGalleryPicker"><i class="bi bi-plus"></i> Add item</p>
+                <h1 class="highlight">Gallery</h1>
+                <p v-if="userIsAdmin" class="admin-info">*changes may take some time*</p>
+                <p v-if="selected_event.images.gallery.length == 0" class="empty-gallery-placeholder">
+                    Event gallery is empty</p>
+
+                <div v-else class="gallery-items-container">
+                    <div class="gallery-item" v-for="(gallery_path, index) in selected_event.images.gallery"
+                        :key="index" @click="openImage(gallery_path)">
+                        <img class="image-item" :src="'/api/storage/fetch?path=' + gallery_path">
+                        <div v-if="userIsAdmin" class="admin-toolbar">
+                            <i class="bi bi-trash admin-tool danger-btn"
+                                @click.stop="deleteGalleryItem(gallery_path)"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="admin-tool primary-btn" @click.stop="triggerGalleryPicker"><i class="bi bi-plus"></i> Add item
+                </p>
+            </template>
+            <template v-else>
+                <h1 class="highlight">Event Not Found</h1>
+            </template>
         </div>
     </div>
     <div v-if="image_preview_modal" class="image-preview-modal" @click.self="image_preview_modal = false">
@@ -174,7 +181,7 @@ async function confirmUpload() {
     const path = `events/thumbnail/${selected_event.value.title}`
 
     if (selected_event.value.images.thumbnail) {
-        $fetch('/api/storage/delete',{
+        $fetch('/api/storage/delete', {
             method: 'POST',
             body: { path: selected_event.value.images.thumbnail }
         })
@@ -202,46 +209,46 @@ async function confirmUpload() {
 const galleryInputRef = ref(null)
 
 function triggerGalleryPicker() {
-  galleryInputRef.value?.click()
+    galleryInputRef.value?.click()
 }
 
 async function handleGalleryChange(event) {
-  const files = event.target.files
-  if (!files || !files.length) return
+    const files = event.target.files
+    if (!files || !files.length) return
 
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i]
-    const reader = new FileReader()
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        const reader = new FileReader()
 
-    await new Promise((resolve) => {
-      reader.onload = async () => {
-        const type = file.type
-        const path = `events/gallery/item-${selected_event.value.images.gallery.length}`
+        await new Promise((resolve) => {
+            reader.onload = async () => {
+                const type = file.type
+                const path = `events/gallery/item-${selected_event.value.images.gallery.length}`
 
-        const res = await $fetch('/api/storage/upload', {
-          method: 'POST',
-          body: { file: reader.result, type, path }
+                const res = await $fetch('/api/storage/upload', {
+                    method: 'POST',
+                    body: { file: reader.result, type, path }
+                })
+
+                if (res?.data) {
+                    selected_event.value.images.gallery.push(path)
+                }
+
+                resolve()
+            }
+            reader.readAsDataURL(file)
         })
-
-        if (res?.data) {
-          selected_event.value.images.gallery.push(path)
-        }
-
-        resolve()
-      }
-      reader.readAsDataURL(file)
-    })
-  }
-
-  await $fetch('/api/events/editevent', {
-    method: 'POST',
-    body: {
-      id: selected_event.value.id,
-      updated_event: selected_event.value
     }
-  })
 
-  galleryInputRef.value.value = null
+    await $fetch('/api/events/editevent', {
+        method: 'POST',
+        body: {
+            id: selected_event.value.id,
+            updated_event: selected_event.value
+        }
+    })
+
+    galleryInputRef.value.value = null
 }
 
 </script>
@@ -338,7 +345,6 @@ p {
     cursor: pointer;
     transition: all 0.3s ease;
 }
-
 
 .primary-btn {
     background: var(--color-counter-primary);

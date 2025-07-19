@@ -21,7 +21,6 @@ import { ref, computed, onMounted } from 'vue'
 const menuOpen = ref(false)
 
 const auth = useAuth()
-onMounted(async () => {await auth.getUser()})
 
 const userLoggedIn = computed(() => auth.userLoggedIn.value)
 const userIsAdmin = computed(() => auth.userIsAdmin.value)

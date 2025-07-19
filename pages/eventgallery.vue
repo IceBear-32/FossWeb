@@ -19,7 +19,7 @@
                     <div v-for="(event, index) in pastEvents" :key="index" class="gallery-item-outer">
                         <div class="gallery-item-inner" :style="event.images.thumbnail
                             ? { backgroundImage: `url('/api/storage/fetch?path=${event.images.thumbnail}')`, backgroundSize: 'cover', backgroundPosition: 'center' }
-                            : { backgroundColor: 'var(--color-counter-secondary)' }" @click="redirectToGallery(index)">
+                            : { backgroundColor: 'var(--color-counter-secondary)' }" @click="redirectToGallery(event.id)">
                             <i v-if="event.images.gallery.length > 0" class="bi gallery-images-icon"
                                 :class="event.images.gallery.length > 1 ? `bi-images` : `bi-image`"></i>
                             <p v-if="event.images.gallery.length > 1" class="gallery-images-count">{{
@@ -57,8 +57,8 @@ $fetch('/api/events/events', {
     }
 })
 
-function redirectToGallery(index) {
-    window.location.href = `/gallery/${index+1}`;
+function redirectToGallery(event_id) {
+    window.location.href = `/gallery/${event_id}`;
 }
 </script>
 

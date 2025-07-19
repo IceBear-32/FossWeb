@@ -64,12 +64,12 @@ const redirUrl = ref('/');
 const auth = useAuth()
 
 const userLoggedIn = computed(() => auth.userLoggedIn.value)
-    const adminRedir = computed(() => {
-        if (auth.userIsAdmin.value && confirm("Logged in as admin. Redirect to admin panel?")) {
-            window.location.href = '/admin/panel'
-        }
-        else false
-    })
+const adminRedir = computed(() => {
+    if (auth.userIsAdmin.value && confirm("Logged in as admin. Redirect to admin panel?")) {
+        window.location.href = '/admin/panel'
+    }
+    else false
+})
 </script>
 
 <style scoped>
