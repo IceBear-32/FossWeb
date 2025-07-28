@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     transpile: ['qrcode.vue']
   },
   nitro: {
-    preset: 'cloudflare'
+    preset: 'vercel'
   },
   app: {
     head: {
