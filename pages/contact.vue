@@ -62,7 +62,7 @@ textarea {
   color: var(--color-text-primary);
   transition: outline 0.3s ease, border 0.3s ease;
   font-family: var(--font-stack);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   border: solid 1px var(--color-border-primary);
   resize: none;

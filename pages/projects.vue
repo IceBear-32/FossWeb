@@ -10,16 +10,19 @@
             <div class="projects-content">
                 <p class="projects-heading highlight">PROJECTS</p>
                 <div class="project-cards-container">
-                    <div class="project-card" v-for="(project, index) in projects" :key="project.title + index"
+                    <div class="projects-loading-container" v-if="projectsLoading">
+                        <LoadingIndicator :size="30"/>
+                    </div>
+                    <div class="project-card" v-for="(project, index) in projects" :key="project.project_name + index"
                         :class="{ 'centered-card': projects.length % 2 === 1 && index === projects.length - 1 }"
-                        @click="openProject(project)" @mousemove="e => handleMouseMove(e, project.title)"
-                        @mouseleave="() => handleMouseLeave(project.title)" :style="boxShadowStyles[project.title]">
-                        <h2>{{ project.title }}</h2>
-                        <p class="truncate">{{ project.description }}</p>
+                        @click="openProject(project)" @mousemove="e => handleMouseMove(e, project.project_name)"
+                        @mouseleave="() => handleMouseLeave(project.project_name)" :style="boxShadowStyles[project.project_name]">
+                        <h2>{{ project.project_name }} <a @click.stop class="author-link highlight" target="_blank" :href="project.project_author_url">{{ project.project_author }}</a></h2>
+                        <p class="truncate">{{ project.project_description }}</p>
                         <div class="tech-stack">
-                            <span v-for="tech in project.tech" :key="tech" class="tech-tag">{{ tech }}</span>
+                            <span v-for="tech in project.project_tech_stack" :key="tech" class="tech-tag">{{ tech }}</span>
                         </div>
-                        <a :href="project.github" class="github-icon" @click.stop target="_blank">
+                        <a :href="project.project_url" class="github-icon" @click.stop target="_blank">
                             <i class="bi bi-github"></i>
                         </a>
                     </div>
@@ -28,14 +31,14 @@
 
             <div class="project-modal" v-if="selectedProject" @click.self="closeProject">
                 <div class="modal-content">
-                    <h2>{{ selectedProject.title }}</h2>
+                    <h2>{{ selectedProject.project_name }} <a class="author-link highlight" target="_blank" :href="selectedProject.project_author_url">{{ selectedProject.project_author }}</a></h2>
                     <div class="modal-description">
-                        <p>{{ selectedProject.description }}</p>
+                        <p>{{ selectedProject.project_description }}</p>
                     </div>
                     <div class="tech-stack">
-                        <span v-for="tech in selectedProject.tech" :key="tech" class="tech-tag">{{ tech }}</span>
+                        <span v-for="tech in selectedProject.project_tech_stack" :key="tech" class="tech-tag">{{ tech }}</span>
                     </div>
-                    <a :href="selectedProject.github" target="_blank" class="view-source">
+                    <a :href="selectedProject.project_url" target="_blank" class="view-source">
                         <i class="bi bi-github"></i>
                         <span>View source</span>
                     </a>
@@ -43,77 +46,68 @@
             </div>
 
             <div class="github-org-container">
-            <p class="github-org-title">Visit Our <span class="highlight">Github Organization</span></p>
-            <a :href="github_org_link" class="github-link-btn" target="_blank">
-                <div class="link-btn-text">
-                    <i class="bi bi-github link-btn-text"></i>
-                    <p>Github</p>
+                <p class="github-org-title">Visit Our <span class="highlight">Github Organization</span></p>
+                <a :href="github_org_link" class="github-link-btn" target="_blank">
+                    <div class="link-btn-text">
+                        <i class="bi bi-github link-btn-text"></i>
+                        <p>Github</p>
                     </div>
-            </a>
-        </div>
+                </a>
+            </div>
         </div>
     </div>
 </template>
 
-<script>
-import { github_org_link } from '@/assets/js/global';
+<script setup>
+import { github_org_link } from '~/assets/js/socials';
+import LoadingIndicator from '~/components/loading_indicator.vue';
 
-export default {
-    data() {
-        return {
-            selectedProject: null,
-            projects: [
-                {
-                    title: 'Attendance Scanner',
-                    description:
-                        'The FOSS Attendance System is a basic Python-based desktop prototype application designed to streamline attendance management for events. Built using PyQt5 for the GUI and integrated with Google Sheets for data storage. Volunteers can scan QR codes during the event, and attendance is automatically recorded in a linked Google Sheet.',
-                    github: 'https://github.com/fosschapter/foss-attendance-scanner',
-                    tech: ['Python', 'PyQt5', 'Google Sheets API'],
-                },
-                {
-                    title: 'Plant Doctor',
-                    description:
-                        'PlantDoctor is an AI-powered web app for rapid plant disease diagnosis and intelligent agricultural help. Upload leaf images to detect disease, receive treatment advice, and chat with an AI bot for support using llama-3.3-70b via Groq API.',
-                    github: 'https://github.com/fosschapter/PlantDoctor',
-                    tech: ['Python', 'TensorFlow', 'Gradio', 'Groq LLM API'],
-                },
-            ],
-            boxShadowStyles: {},
-            github_org_link
-        };
-    },
-    methods: {
-        openProject(project) {
-            this.selectedProject = project;
-        },
-        closeProject() {
-            this.selectedProject = null;
-        },
-        handleMouseMove(event, key) {
-            const el = event.currentTarget;
-            const rect = el.getBoundingClientRect();
+const projectsLoading = ref(true)
 
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+const selectedProject = ref(null)
+const projects = ref([])
 
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
+onMounted(async () => {
+    try {
+        const data = await $fetch('/api/public/getprojects')
+        projects.value = data.projects
+        projectsLoading.value = false
+    }
+    catch (error) {
+        projects.value = [{
+        project_name: 'Error (or) Empty projects',
+        project_description: error || "Project list is empty in repos",
+        project_tech_stack: [],
+        project_author: 'Error',
+        project_author_url: '#',
+        project_url: '#'
+    }]
+    }
+})
 
-            const offsetX = (x - centerX) / 20;
-            const offsetY = (y - centerY) / 10;
+const boxShadowStyles = ref({})
 
-            this.boxShadowStyles[key] = `box-shadow: ${offsetX}px ${offsetY}px 16px var(--color-counter-primary); transition: box-shadow 0.1s ease;`;
-        },
-        handleMouseLeave(key) {
-            this.boxShadowStyles[key] = 'box-shadow: none; transition: box-shadow 0.3s ease;';
-        },
-    },
-    created() {
-        this.projects.forEach((project) => {
-            this.boxShadowStyles[project.title] = 'box-shadow: none;';
-        });
-    },
-};
+const openProject = (project) => selectedProject.value = project
+const closeProject = () => selectedProject.value = null
+
+const handleMouseMove = (event, key) => {
+    const el = event.currentTarget;
+    const rect = el.getBoundingClientRect();
+
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const offsetX = (x - centerX) / 20;
+    const offsetY = (y - centerY) / 10;
+
+    boxShadowStyles.value[key] = `box-shadow: ${offsetX}px ${offsetY}px 16px var(--color-counter-primary); transition: box-shadow 0.1s ease;`;
+}
+const handleMouseLeave = (key) => {
+    boxShadowStyles.value[key] = 'box-shadow: none; transition: box-shadow 0.3s ease;';
+}
 </script>
 
 <style scoped>
@@ -163,6 +157,7 @@ export default {
 
 .projects-section {
     background-color: var(--color-primary);
+    min-width: 100%;
 }
 
 .projects-content {
@@ -201,6 +196,19 @@ export default {
     justify-content: space-between;
 }
 
+.projects-loading-container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    border-radius: 0.5rem;
+}
+
 .centered-card {
     grid-column: 1 / -1;
     justify-self: center;
@@ -212,6 +220,20 @@ export default {
     font-size: 20px;
     color: var(--color-text-primary);
 }
+
+.author-link {
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.modal-content .author-link {
+    color: var(--color-text-secondary);
+}
+
+.author-link:hover {
+    color: var(--color-text-secondary-dark);
+}
+
 
 .truncate {
     overflow: hidden;
@@ -231,7 +253,7 @@ export default {
     right: 0;
     height: 1.1em;
     width: 100%;
-    background: linear-gradient(to right, transparent, var(--color-primary) 90%);
+    background: linear-gradient(to right, transparent 70%, var(--color-primary) 90%);
 }
 
 .tech-stack {
@@ -375,99 +397,99 @@ export default {
 }
 
 @media (max-width: 1200px) {
-  .projects-content {
-    margin: 0 100px;
-    padding: 32px;
-  }
-  .github-org-container {
-    padding: 40px 100px;
-  }
+    .projects-content {
+        margin: 0 100px;
+        padding: 32px;
+    }
+
+    .github-org-container {
+        padding: 40px 100px;
+    }
 }
 
 @media (max-width: 1024px) {
-  .projects-content {
-    margin: 0 50px;
-    padding: 24px;
-  }
+    .projects-content {
+        margin: 0 50px;
+        padding: 24px;
+    }
 
-  .github-org-container {
-    padding: 40px 50px;
-  }
+    .github-org-container {
+        padding: 40px 50px;
+    }
 
-  .hero-title-container {
-    font-size: 30px;
-    margin-top: -200px;
-  }
+    .hero-title-container {
+        font-size: 30px;
+        margin-top: -200px;
+    }
 }
 
 @media (max-width: 768px) {
-  .project-cards-container {
-    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-  }
+    .project-cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    }
 
-  .centered-card {
-    width: 100%;
-  }
+    .centered-card {
+        width: 100%;
+    }
 
-  .github-org-title {
-    font-size: 24px;
-    text-align: center;
-  }
+    .github-org-title {
+        font-size: 24px;
+        text-align: center;
+    }
 
-  .github-link-btn {
-    width: 100%;
-    padding: 1rem;
-    font-size: 16px;
-  }
+    .github-link-btn {
+        width: 100%;
+        padding: 1rem;
+        font-size: 16px;
+    }
 }
 
 @media (max-width: 500px) {
-  .projects-content {
-    margin: 0 20px;
-    padding: 16px;
-  }
+    .projects-content {
+        margin: 0 20px;
+        padding: 16px;
+    }
 
-  .hero-title-container {
-    font-size: 24px;
-    margin-top: -160px;
-    text-align: center;
-  }
+    .hero-title-container {
+        font-size: 24px;
+        margin-top: -160px;
+        text-align: center;
+    }
 
-  .project-card {
-    padding: 12px;
-  }
+    .project-card {
+        padding: 12px;
+    }
 
-  .project-card h2 {
-    font-size: 16px;
-  }
+    .project-card h2 {
+        font-size: 16px;
+    }
 
-  .github-org-title {
-    font-size: 20px;
-  }
+    .github-org-title {
+        font-size: 20px;
+    }
 
-  .github-link-btn {
-    font-size: 14px;
-    padding: 0.75rem;
-  }
+    .github-link-btn {
+        font-size: 14px;
+        padding: 0.75rem;
+    }
 
-  .link-btn-text {
-    flex-direction: row;
-    justify-content: center;
-    gap: 0.25rem;
-  }
+    .link-btn-text {
+        flex-direction: row;
+        justify-content: center;
+        gap: 0.25rem;
+    }
 
-  .link-btn-text p {
-    font-size: 14px;
-  }
+    .link-btn-text p {
+        font-size: 14px;
+    }
 
-  .tech-tag {
-    font-size: 10px;
-    padding: 3px 6px;
-  }
+    .tech-tag {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
 
-  .modal-content {
-    padding: 20px;
-  }
+    .modal-content {
+        padding: 20px;
+    }
 }
-
 </style>

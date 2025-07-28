@@ -10,7 +10,7 @@
         <li><a href="/projects">Projects</a></li>
         <li v-if="userIsAdmin"><a href="/admin/panel">Admin Panel</a></li>
         <li v-if="!userLoggedIn"><a href="/join">Join FOSS</a></li>
-        <li v-else><a href="/profile"><img class="profile-image" :src="auth.userProfile.value.avatar"> Profile</a></li>
+        <li v-else><a href="/profile"><Profilepic class="profile-image"/> Profile</a></li>
       </ul>
     </nav>
   </header>
@@ -25,6 +25,8 @@ const auth = useAuth()
 const userLoggedIn = computed(() => auth.userLoggedIn.value)
 const userIsAdmin = computed(() => auth.userIsAdmin.value)
 
+import Profilepic from '~/components/profilepic.vue'
+
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value
 }
@@ -34,14 +36,16 @@ const toggleMenu = () => {
 * {
   margin: 0;
   color: var(--color-text-secondary-dark);
+  box-sizing: border-box;
 }
+
 
 .navbar {
   border-bottom: 1px solid var(--color-divider);
   font-size: 14px;
   font-weight: 500;
   letter-spacing: .5px;
-  padding: 2rem 200px;
+  padding: 1rem 200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -73,9 +77,10 @@ const toggleMenu = () => {
 .navbar-menu a {
   text-decoration: none;
   padding: 8px 16px;
+  height: 40px;
+  line-height: 24px;
   border-radius: 6px;
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 0.5rem;
   transition: background-color 0.3s, color 0.3s;
@@ -87,9 +92,10 @@ const toggleMenu = () => {
 }
 
 .profile-image {
-  max-height: 30px;
-  max-width: 30px;
-  border-radius: 1rem;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 @media (max-width: 900px) {
@@ -98,7 +104,6 @@ const toggleMenu = () => {
     justify-content: flex-end;
     z-index: 2;
     width: 100%;
-    box-sizing: border-box;
   }
 
   .menu-toggle {
@@ -136,6 +141,7 @@ const toggleMenu = () => {
     padding: 12px 16px;
     justify-content: center;
     text-align: center;
+    height: auto;
   }
 
   .navbar-menu ul,
@@ -157,4 +163,5 @@ const toggleMenu = () => {
     width: 100%;
   }
 }
+
 </style>

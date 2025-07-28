@@ -60,6 +60,7 @@ function redirectToEdit(id) {
     border-radius: 0.5rem;
     background-color: var(--color-primary);
     border: 1px solid var(--color-border-primary);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
     gap: 1rem;

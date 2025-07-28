@@ -8,27 +8,38 @@
                     <a href="/" class="footer-text-secondary footer-link">Home</a>
                     <a href="/events" class="footer-text-secondary footer-link">Events</a>
                     <a href="/projects" class="footer-text-secondary footer-link">Projects</a>
-                    <a href="/forum" class="footer-text-secondary footer-link">Forum</a>
+                    <!--<a href="/forum" class="footer-text-secondary footer-link">Forum</a>
                     <a href="/blog" class="footer-text-secondary footer-link">Blog</a>
+                -->
                     <a href="/contribute" class="footer-text-secondary footer-link">Contribute</a>
                 </div>
                 <div class="footer-link-list">
                     <span class="footer-text-primary">About</span>
-                    <a href="/about" class="footer-text-secondary footer-link">Team</a>
+                    <a href="/about" class="footer-text-secondary footer-link">About FOSS</a>
+                    <a href="/about/team" class="footer-text-secondary footer-link">Team</a>
                     <a href="/about/contributors" class="footer-text-secondary footer-link">Contributors</a>
                 </div>
                 <div class="footer-link-list">
                     <span class="footer-text-primary">Policy</span>
-                    <a href="/privacy-policy" class="footer-text-secondary footer-link">Privacy Policy</a>
+                    <a href="/website-policy" class="footer-text-secondary footer-link">Website Policy</a>
                     <a href="/terms-of-service" class="footer-text-secondary footer-link">Terms of Service</a>
                 </div>
                 <div class="footer-link-list">
                     <span class="footer-text-primary">Socials</span>
-                    <a href="" class="footer-text-secondary footer-link">Instagram</a>
-                    <a href="" class="footer-text-secondary footer-link">Facebook</a>
-                    <a href="" class="footer-text-secondary footer-link">X (Twitter)</a>
-                    <a href="" class="footer-text-secondary footer-link">LinkedIn</a>
-                    <a :href="github_org_link" class="footer-text-secondary footer-link">GitHub</a>
+                    <a :href="instagram" class="footer-text-secondary footer-link" target="_blank">Instagram</a>
+                    <a :href="whatsapp" class="footer-text-secondary footer-link" target="_blank">Whatsapp</a>
+                    <a :href="twitter_x" class="footer-text-secondary footer-link" target="_blank">X (Twitter)</a>
+                    <a :href="reddit" class="footer-text-secondary footer-link" target="_blank">Reddit</a>
+                    <a :href="quora" class="footer-text-secondary footer-link" target="_blank">Quora</a>
+                </div>
+                <div class="footer-link-list">
+                    <span class="footer-text-primary">Profiles</span>
+                    <a :href="hugging_face" class="footer-text-secondary footer-link" target="_blank">Hugging Face</a>
+                    <a :href="dev_to" class="footer-text-secondary footer-link" target="_blank">Dev Community</a>
+                    <a :href="medium" class="footer-text-secondary footer-link" target="_blank">Medium</a>
+                    <a :href="youtube" class="footer-text-secondary footer-link" target="_blank">Youtube</a>
+                    <a :href="linked_in" class="footer-text-secondary footer-link" target="_blank">LinkedIn</a>
+                    <a :href="github_org_link" class="footer-text-secondary footer-link" target="_blank">GitHub</a>
                 </div>
                 <div class="footer-link-list">
                     <span class="footer-text-primary">Contact</span>
@@ -48,10 +59,13 @@
                 <p class="footer-info-org-grp">Tiruchirappalli</p>
                 </div>
                 <div class="footer-info-socials">
-                    <a href="#" class="footer-social-icon"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="footer-social-icon"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="footer-social-icon"><i class="bi bi-twitter-x"></i></a>
-                    <a href="#" class="footer-social-icon"><i class="bi bi-linkedin"></i></a>
+                    <a :href="instagram" class="footer-social-icon" target="_blank"><i class="bi bi-instagram"></i></a>
+                    <a :href="whatsapp" class="footer-social-icon" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                    <a :href="twitter_x" class="footer-social-icon" target="_blank"><i class="bi bi-twitter-x"></i></a>
+                    <a :href="reddit" class="footer-social-icon" target="_blank"><i class="bi bi-reddit"></i></a>
+                    <a :href="quora" class="footer-social-icon" target="_blank"><i class="bi bi-quora"></i></a>
+                    <a :href="linked_in" class="footer-social-icon" target="_blank"><i class="bi bi-linkedin"></i></a>
+                    <a :href="youtube" class="footer-social-icon" target="_blank"><i class="bi bi-youtube"></i></a>
                     <a :href="github_org_link" class="footer-social-icon" target="_blank"><i class="bi bi-github"></i></a>
                 </div>
             </div>
@@ -133,7 +147,7 @@
 
 .footer-info-socials {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: right;
     font-size: 1.2rem;
     gap: 0.5rem;
@@ -187,8 +201,8 @@
         flex-direction: column;
     }
     .footer-link-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         gap: 2rem;
         width: 100%;
@@ -226,12 +240,11 @@
     }
   .footer-content {
     flex-direction: column;
-    align-items: flex-start;   /* make whole footer content align left */
+    align-items: flex-start;
     width: 100%;
   }
 
   .footer-link-container {
-    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
     width: 100%;
   }
@@ -266,5 +279,17 @@
 </style>
 
 <script setup>
-import { github_org_link } from '@/assets/js/global';
+import {
+    linked_in,
+    github_org_link,
+    twitter_x,
+    instagram,
+    whatsapp,
+    hugging_face,
+    dev_to,
+    reddit,
+    medium,
+    quora,
+    youtube
+    } from '~/assets/js/socials';
 </script>

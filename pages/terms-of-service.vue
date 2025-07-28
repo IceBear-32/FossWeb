@@ -4,17 +4,20 @@
         <div class="hero-section">
             <div class="hero-animation"></div>
             <div class="hero-title-container">
-                <p class="hero-title">About <span class="highlight">The FOSS Chapter</span></p>
+                <p class="hero-title">Foss <span class="highlight">Terms of Service</span></p>
             </div>
         </div>
-        <div class="info-card">
-            <div class="info-card-content">
-                <div class="info-card-about">
-                    <p class="info-card-title highlight">ABOUT FOSS</p>
-                    <p class="info-card-desc">FOSS (Free and Open Source Software) is a community-driven initiative that promotes the use and development of free software. Our mission is to provide resources, support, and a platform for collaboration among developers, users, and enthusiasts.</p>
-                    <br/>
-                    <p class="info-card-desc">We believe in the power of open source to drive innovation, foster learning, and create a more inclusive digital world. Join us in our journey to make software accessible to everyone!</p>
-                </div>
+        <div class="tos-card">
+            <div class="tos-card-content">
+                <div class="tos-card-about">
+                    <p class="tos-card-title highlight">TERMS OF SERVICE</p>
+                    <p class="tos-card-desc">By accessing this website, users agree to use its content responsibly and in accordance with
+                        applicable intellectual property rights. All materials, unless otherwise stated, are owned by the FOSS
+                        Club and must not be reused or distributed without proper attribution. Participation in club events
+                        implies agreement with our code of conduct and permission to share related materials publicly.
+                        External links are provided for convenience, and the club holds no responsibility for third-party
+                        content. Continued use of the site implies acceptance of any updates to these terms.</p>
+                    </div>
             </div>
         </div>
     </div>
@@ -27,11 +30,11 @@
     background: radial-gradient(circle, var(--color-counter-primary) 70%, var(--color-counter-secondary) 100%);
 }
 
-.info-card {
+.tos-card {
     background-color: var(--color-primary);
 }
 
-.info-card-content {
+.tos-card-content {
     padding: 48px;
     border-radius: 0.5rem;
     background-color: var(--color-primary);
@@ -43,19 +46,19 @@
     gap: 1rem;
 }
 
-.info-card-about {
+.tos-card-about {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.info-card-title {
+.tos-card-title {
     font-size: 16px;
     font-weight: 600;
     margin: 0;
 }
 
-.info-card-desc {
+.tos-card-desc {
     font-size: 16px;
     font-weight: 600;
     margin: 0;
@@ -95,7 +98,7 @@
 }
 
 @media (max-width: 1200px) {
-    .info-card-content {
+    .tos-card-content {
         margin: 0 80px;
         padding: 32px;
     }
@@ -103,7 +106,7 @@
 
 
 @media (max-width: 768px) {
-    .info-card-content {
+    .tos-card-content {
         margin: 0 40px;
         padding: 24px;
     }
@@ -116,7 +119,7 @@
 
 
 @media (max-width: 500px) {
-    .info-card-content {
+    .tos-card-content {
         margin: 0 20px;
         padding: 16px;
     }

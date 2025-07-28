@@ -44,5 +44,13 @@ export const uploadFile = async (file: string, path: string, type: string) => {
             .from('media')
             .upload(path, decode(file.split('base64,')[1]), {
                 contentType: type
-            })
+  })
+}
+
+export const updateFile = async (file: string, path: string, type: string) => {
+  return SupabaseClient().storage
+            .from('media')
+            .update(path, decode(file.split('base64,')[1]), {
+                contentType: type
+  })
 }

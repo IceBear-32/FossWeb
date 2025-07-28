@@ -14,7 +14,7 @@
       </ul>
     </div>
     
-    <button v-if="parsedFields" class="scanned-btn" @click="verify">{{isVerified ? "Verified" : "Verify entry"}}</button>
+    <button v-if="parsedFields" class="scanned-btn" @click="verify" :disabled="isVerified">{{isVerified ? "Verified" : "Verify entry"}}</button>
     <button v-if="parsedFields" class="scanned-btn" @click="startScan">Scan Again</button>
   </div>
 </template>
@@ -100,6 +100,7 @@ onBeforeUnmount(() => {
   background: var(--color-primary);
   padding: 2rem;
   border-radius: 8px;
+  border: 1px solid var(--color-border-primary);
   max-width: 400px;
   margin: 2rem auto;
   box-shadow: 0 5px 10px rgba(0,0,0,0.1);

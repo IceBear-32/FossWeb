@@ -37,7 +37,7 @@ if (error.value) {
   background-color: var(--color-primary);
   border-radius: 1.5rem;
   border: 1px solid var(--color-border-primary);
-  box-shadow: 0 0 15px rgba(0, 187, 255, 0.1);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
 
 h2 {

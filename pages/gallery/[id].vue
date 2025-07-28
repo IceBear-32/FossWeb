@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="admin-tool primary-btn" @click.stop="triggerGalleryPicker"><i class="bi bi-plus"></i> Add item
+                <p v-if="userIsAdmin" class="admin-tool primary-btn" @click.stop="triggerGalleryPicker"><i class="bi bi-plus"></i> Add item
                 </p>
             </template>
             <template v-else>
@@ -180,14 +180,7 @@ async function confirmUpload() {
     const type = selectedFile.value.type
     const path = `events/thumbnail/${selected_event.value.title}`
 
-    if (selected_event.value.images.thumbnail) {
-        $fetch('/api/storage/delete', {
-            method: 'POST',
-            body: { path: selected_event.value.images.thumbnail }
-        })
-    }
-
-    const res = await $fetch('/api/storage/upload', {
+    const res = await $fetch(`/api/storage/${selected_event.value.images.thumbnail ? 'update' : 'upload'}`, {
         method: 'POST',
         body: { file: previewUrl.value, type, path }
     })
@@ -201,6 +194,7 @@ async function confirmUpload() {
                 updated_event: selected_event.value
             }
         })
+        window.location.reload()
     }
 
     cancelUpload()
@@ -223,7 +217,7 @@ async function handleGalleryChange(event) {
         await new Promise((resolve) => {
             reader.onload = async () => {
                 const type = file.type
-                const path = `events/gallery/item-${selected_event.value.images.gallery.length}`
+                const path = `events/gallery${selected_event.value.title}_${selected_event.value.id}/item-${selected_event.value.images.gallery.length}`
 
                 const res = await $fetch('/api/storage/upload', {
                     method: 'POST',

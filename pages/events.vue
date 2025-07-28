@@ -55,7 +55,7 @@
                         </div>
                         <div class="events-modal-item-split">
                             <i class="bi bi-info-circle"></i>
-                            <p class="events-modal-item-description">{{ event.description }}</p>
+                            <p class="events-modal-item-description">{{ event.description ?? '<no description>' }}</p>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="events-modal-item-split">
                             <i class="bi bi-info-circle"></i>
-                            <p class="events-modal-item-description">{{ event.description }}</p>
+                            <p class="events-modal-item-description">{{ event.description ?? '<no description>' }}</p>
                         </div>
                     </div>
                 </div>
@@ -110,21 +110,6 @@ $fetch('/api/events/events', {
             upcomingEvents.value = response.response._data.events;
         } else {
             console.error('Failed to fetch past events:', response.statusText);
-        }
-    }
-})
-
-$fetch('/api/events/editevent?id=2', {
-    method: 'POST',
-    body: {
-        updated_event: {
-            title: 'Git&IoT Initiative',
-            description: 'Version control workshop and intro to IoT',
-            date: '2025-07-16',
-            images: {
-                thumbnail: 'events/thumbnails/ice.png',
-                gallery: []
-            }
         }
     }
 })
@@ -321,7 +306,7 @@ const openUpcomingEventsModal = ref(false);
     padding: 1rem;
     border: 1px solid var(--color-border-primary);
     border-radius: 0.5rem;
-    background-color: var(--color-counter-secondary);
+    background-color: var(--color-counter-primary);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;

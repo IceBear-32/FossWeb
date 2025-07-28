@@ -11,7 +11,6 @@
 const page = ref('')
 
 onMounted(() => {
-    console.log(error)
     page.value = window.location.pathname
 })
 
@@ -33,6 +32,7 @@ const error = useError();
 h1 {
     font-size: 4rem;
     margin: 0;
+    margin: 0 20px;
 }
 
 .message {

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="userIsAdmin" class="upload-container">
+  <div class="upload-container">
     <h2 class="upload-title highlight">Upload Event Details</h2>
 
     <form @submit.prevent="submitEvent" class="upload-form">
@@ -33,8 +33,6 @@
 
 <script setup>
 import { ref } from 'vue'
-
-const userIsAdmin = ref(true)
 
 const thumbnail = ref(null)
 const preview = ref(null)
@@ -128,6 +126,7 @@ const submitEvent = async () => {
   margin: 95px auto;
   background: var(--color-primary);
   border-radius: 8px;
+  border: 1px solid var(--color-border-primary);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   padding: 2rem;
 }

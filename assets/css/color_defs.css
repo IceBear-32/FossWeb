@@ -1,20 +1,24 @@
 :root {
-  --color-primary: #1a2c38;
-  --color-primary-80: rgba(26, 44, 56, 0.8);
-  --color-counter-primary: #25475c;
-  --color-counter-secondary: #2e5f77;
+  /* Backgrounds */
+  --color-primary: #1e293b;
+  --color-counter-primary: #334155;
+  --color-counter-secondary: #627287;
 
-  --color-highlight: #69C3FF;
-  --color-button-primary: #44baff;
+  /* Accent / Brand Colors */
+  --color-highlight: #10b981;
+  --color-button-primary: #22c55e;
 
-  --color-text-primary: #eafcff;
-  --color-text-secondary-dark: #a2eaff;
-  --color-text-secondary: #bdf2ff;
+  /* Text */
+  --color-text-primary: #f8fafc;
+  --color-text-secondary-dark: #cbd5e1;
+  --color-text-secondary: #94a3b8;
 
-  --color-divider: #3b8fa8;
-  --color-border-primary: #5aaecd;
+  /* UI Borders and Dividers */
+  --color-divider: #64748b;
+  --color-border-primary: #475569;
 
-  --color-primary-footer: #101820;
-  --color-text-primary-footer: #dcf8ff;
-  --color-text-secondary-footer: #88ddff;
+  /* Footer */
+  --color-primary-footer: #0f172a;
+  --color-text-primary-footer: #e2e8f0;
+  --color-text-secondary-footer: #94a3b8;
 }

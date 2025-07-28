@@ -1,0 +1,11 @@
+export const github_org_link = "https://github.com/fosschapter"  // <--- in-case, if the github link is changed, do not add a '/' at the end, the profile name should be at the end because it's used in `/server/api/public/getprojects.get.ts`
+export const linked_in = "https://www.linkedin.com/in/foss-student-chapter-67520b376?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BjTVUrBZATyuSceY%2B7FStYw%3D%3D"
+export const twitter_x = "https://x.com/FOSSxIEEE?t=wP6HYsefqNo3IN7rvnckqQ&s=09"
+export const instagram = "https://www.instagram.com/foss.chapter"
+export const whatsapp = "https://whatsapp.com/channel/0029VbAUwwgKbYMHY4sZlO3g"
+export const hugging_face = "https://huggingface.co/fosschapter"
+export const dev_to = "https://dev.to/foss_chapter"
+export const reddit = "https://www.reddit.com/user/fosschapter/"
+export const medium = "https://medium.com/@fosschapter"
+export const quora = "https://www.quora.com/profile/FOSS-Chapter"
+export const youtube = "https://youtube.com/@fossxieeestudentchapter"

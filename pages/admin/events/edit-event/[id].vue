@@ -1,5 +1,5 @@
 <template>
-    <div v-if="userIsAdmin" class="edit-container">
+    <div class="edit-container">
         <h2 class="edit-title highlight" v-if="!selected_event">Event not found</h2>
         <template v-else>
         <h2 class="edit-title highlight">Edit Event Details</h2>

@@ -57,10 +57,12 @@ $fetch('/api/events/events', {
   }
 }).catch();
 
+const auth = useAuth()
+
 const selectedEvent = computed(() => events.value[0])
-const userName = ref('')
+const userName = computed(() => auth.userLoggedIn.value ? auth.userProfile.value.username : '')
 const regNo = ref('')
-const email = ref('')
+const email = computed(() => auth.userLoggedIn.value ? auth.userProfile.value.email : '')
 const Class = ref('')
 const submitted = ref(false)
 

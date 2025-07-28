@@ -4,17 +4,19 @@
         <div class="hero-section">
             <div class="hero-animation"></div>
             <div class="hero-title-container">
-                <p class="hero-title">About <span class="highlight">The FOSS Chapter</span></p>
+                <p class="hero-title">Foss Website <span class="highlight">Policy</span></p>
             </div>
         </div>
-        <div class="info-card">
-            <div class="info-card-content">
-                <div class="info-card-about">
-                    <p class="info-card-title highlight">ABOUT FOSS</p>
-                    <p class="info-card-desc">FOSS (Free and Open Source Software) is a community-driven initiative that promotes the use and development of free software. Our mission is to provide resources, support, and a platform for collaboration among developers, users, and enthusiasts.</p>
-                    <br/>
-                    <p class="info-card-desc">We believe in the power of open source to drive innovation, foster learning, and create a more inclusive digital world. Join us in our journey to make software accessible to everyone!</p>
-                </div>
+        <div class="policy-card">
+            <div class="policy-card-content">
+                <div class="policy-card-about">
+                    <p class="policy-card-title highlight">WEBSITE POLICY</p>
+                    <p class="policy-card-desc">The FOSS Club website is a platform dedicated to promoting open-source learning, collaboration,
+                        and student engagement. All content shared is intended for educational and non-commercial use.
+                        We respect user privacy by collecting minimal data solely for site functionality and analytics, and we
+                        handle all personal information with confidentiality. Users are expected to maintain respectful and
+                        inclusive behavior while interacting with the website and its associated platforms.</p>
+                    </div>
             </div>
         </div>
     </div>
@@ -27,11 +29,11 @@
     background: radial-gradient(circle, var(--color-counter-primary) 70%, var(--color-counter-secondary) 100%);
 }
 
-.info-card {
+.policy-card {
     background-color: var(--color-primary);
 }
 
-.info-card-content {
+.policy-card-content {
     padding: 48px;
     border-radius: 0.5rem;
     background-color: var(--color-primary);
@@ -43,19 +45,19 @@
     gap: 1rem;
 }
 
-.info-card-about {
+.policy-card-about {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.info-card-title {
+.policy-card-title {
     font-size: 16px;
     font-weight: 600;
     margin: 0;
 }
 
-.info-card-desc {
+.policy-card-desc {
     font-size: 16px;
     font-weight: 600;
     margin: 0;
@@ -95,7 +97,7 @@
 }
 
 @media (max-width: 1200px) {
-    .info-card-content {
+    .policy-card-content {
         margin: 0 80px;
         padding: 32px;
     }
@@ -103,7 +105,7 @@
 
 
 @media (max-width: 768px) {
-    .info-card-content {
+    .policy-card-content {
         margin: 0 40px;
         padding: 24px;
     }
@@ -116,7 +118,7 @@
 
 
 @media (max-width: 500px) {
-    .info-card-content {
+    .policy-card-content {
         margin: 0 20px;
         padding: 16px;
     }

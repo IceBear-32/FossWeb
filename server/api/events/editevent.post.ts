@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-        const { data, error } = await SupabaseClient().from('events').update(updated_event).eq('id', id).select();
+        const { data, error } = await SupabaseClient().from('events').update(updated_event).eq('id', id).select().single();
 
         if (error) {
             setResponseStatus(event, 404);

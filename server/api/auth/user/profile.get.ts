@@ -1,4 +1,4 @@
-import { SupabaseServerClient, SupabaseClient } from "../../../utils/supabase";
+import { SupabaseServerClient, SupabaseClient } from "~/server/utils/supabase";
 
 export default defineEventHandler(async (event) => {
   try {

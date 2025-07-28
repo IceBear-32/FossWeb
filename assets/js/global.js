@@ -1,1 +1,0 @@
-export const github_org_link = "https://github.com/fosschapter"

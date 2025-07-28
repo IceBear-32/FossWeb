@@ -16,8 +16,8 @@
       <input v-model="form.password" type="password" placeholder="Password" required />
 
       <div class="remember-me" v-if="!isSignUp">
-        <input v-model="form.remember" type="checkbox" id="remember" />
-        <label for="remember" class="remember-label">Remember me</label>
+        <!--<input v-model="form.remember" type="checkbox" id="remember" />
+        <label for="remember" class="remember-label">Remember me</label>-->
       </div>
 
       <button type="submit" class="auth-btn">{{ isSignUp ? 'Register' : 'Login' }}</button>
@@ -185,7 +185,7 @@ const signInWithGoogle = async () => {
   border-radius: 4px;
   background-color: var(--color-counter-secondary);
   color: var(--color-text-primary);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   border: solid 1px var(--color-border-primary);
   transition: border 0.3s ease, outline 0.3s ease;
@@ -214,6 +214,7 @@ const signInWithGoogle = async () => {
   margin-top: 1rem;
   text-align: center;
   color: var(--color-text-secondary);
+  text-decoration: underline;
   cursor: pointer;
   font-size: 0.9rem;
 }
@@ -247,6 +248,7 @@ const signInWithGoogle = async () => {
   vertical-align: middle;
   margin-right: 6px;
   outline: none;
+  transition: all 0.3s ease;
 }
 
 .auth-container input[type="checkbox"]:checked {
@@ -349,6 +351,7 @@ const signInWithGoogle = async () => {
 .google-auth:hover {
   background-color: rgba(0, 191, 255, 0.1);
   border-color: var(--color-highlight);
+  color: var(--color-highlight);
   box-shadow: 0 0 8px var(--color-highlight);
 }
 
