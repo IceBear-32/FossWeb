@@ -6,7 +6,7 @@
         <div class="hero-section">
             <div class="hero-animation"></div>
             <div class="hero-title-container">
-                <p class="hero-title">Be Part a of <span class="highlight">The FOSS Revolution</span></p>
+                <p class="hero-title">Be a Part of <span class="highlight">The FOSS Revolution</span></p>
             </div>
         </div>
         <div class="info-card">
